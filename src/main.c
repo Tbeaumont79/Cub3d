@@ -25,10 +25,9 @@ void    ft_putnbr(int nb)
 
 int key_press(int key_value, void *param)
 {
-    ft_putnbr(key_value);
     if (key_value == 53)
         exit(EXIT_SUCCESS);
-    return (0);
+    return (key_value);
 }
 
 int main()
@@ -47,17 +46,17 @@ int main()
     win = mlx_new_window(ptr, win_width, heigth_width, "Title");
     img = mlx_new_image(ptr, win_width, heigth_width);
     datas = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
-    while (++x < heigth_width / 2)
+    while (++x <= heigth_width / 2)
     {
         y = -1;
         while (++y < win_width)
-            datas[x * win_width + y] = 0x000099;
+            datas[x * win_width + y] = 0x96d1c6;
     }
     while (++x < heigth_width)
     {
         y = -1;
         while (++y < win_width)
-            datas[x * win_width + y] = 0xFFFFFF;
+            datas[x * win_width + y] = 0xdeff8b;
     }
     mlx_put_image_to_window(ptr, win, img, 0, 0);
     mlx_key_hook(win, key_press, (void *)0);
