@@ -17,28 +17,23 @@ void    init_raycasting_var(t_struct *datas)
     datas->algo.rotSpeed = 0.05;
 }
 
-void    ft_raycasting(t_struct *datas)
+void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
 {
-    int h;
-    int w;
+    datas->algo.cameraX = 2 * datas->algo.x / (double)w - 1;
+    datas->algo.rayDirX =
+    datas->algo.dirX + datas->algo.planeX * datas->algo.cameraX;
+    datas->algo.rayDirY =
+    datas->algo.dirY + datas->algo.planeY * datas->algo.cameraX;
+    datas->algo.mapX = (int)datas->algo.posX;
+    datas->algo.mapY = (int)datas->algo.posY;
+    datas->algo.deltaDistX = (double)ft_abs(1 / datas->algo.rayDirX);
+    datas->algo.deltaDistY = (double)ft_abs(1 / datas->algo.rayDirY);
+    datas->algo.hit = 0;
+}
 
-    init_raycasting_var(datas);
-    h = screenHeight;
-    w = screenWidth;
-    datas->algo.x = 0;
-    while (datas->algo.x < w)
-    {
-        datas->algo.cameraX = 2 * datas->algo.x / (double)w - 1;
-        datas->algo.rayDirX =
-        datas->algo.dirX + datas->algo.planeX * datas->algo.cameraX;
-        datas->algo.rayDirY =
-        datas->algo.dirY + datas->algo.planeY * datas->algo.cameraX;
-        datas->algo.mapX = (int)datas->algo.posX;
-        datas->algo.mapY = (int)datas->algo.posY;
-        datas->algo.deltaDistX = (double)ft_abs(1 / datas->algo.rayDirX);
-        datas->algo.deltaDistY = (double)ft_abs(1 / datas->algo.rayDirY);
-        datas->algo.hit = 0;
-        if (datas->algo.rayDirX < 0)
+void    check_raycasting(t_struct *datas)
+{
+    if (datas->algo.rayDirX < 0)
         {
             datas->algo.stepX = -1;
             datas->algo.sideDistX = 
@@ -62,23 +57,31 @@ void    ft_raycasting(t_struct *datas)
             datas->algo.sideDistY =
             (datas->algo.mapY + 1.0 - datas->algo.posY) * datas->algo.deltaDistY;
         }
-        while (datas->algo.hit == 0)
+}
+
+void    check_hit(t_struct *datas)
+{
+    while (datas->algo.hit == 0)
+    {
+        if (datas->algo.sideDistX < datas->algo.sideDistY)
         {
-            if (datas->algo.sideDistX < datas->algo.sideDistY)
-            {
-                datas->algo.sideDistX += datas->algo.deltaDistX;
-                datas->algo.mapX += datas->algo.stepX;
-                datas->algo.side = 0;
-            }
-            else
-            {
-                datas->algo.sideDistY += datas->algo.deltaDistY;
-                datas->algo.mapY += datas->algo.stepY;
-                datas->algo.side = 1;
-            }
-            if (datas->game.map[datas->algo.mapX][datas->algo.mapY] > 0)
-                datas->algo.hit = 1;
+            datas->algo.sideDistX += datas->algo.deltaDistX;
+            datas->algo.mapX += datas->algo.stepX;
+            datas->algo.side = 0;
         }
+        else
+        {
+            datas->algo.sideDistY += datas->algo.deltaDistY;
+            datas->algo.mapY += datas->algo.stepY;
+            datas->algo.side = 1;
+        }
+        if (datas->game.map[datas->algo.mapX][datas->algo.mapY] > 0)
+            datas->algo.hit = 1;
+    }
+}
+
+void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
+{
         datas->algo.perpWallDist = datas->algo.side == 0 ?
         (datas->algo.mapX - datas->algo.posX + (1 - datas->algo.stepX) / 2)
          / datas->algo.rayDirX : (datas->algo.mapY - datas->algo.posY + 
@@ -90,6 +93,22 @@ void    ft_raycasting(t_struct *datas)
         datas->algo.drawEnd = datas->algo.lineHeight / 2 + h / 2;
         if (datas->algo.drawEnd >= h)
             datas->algo.drawEnd = h - 1;
+}
+
+void    ft_raycasting(t_struct *datas)
+{
+    int h;
+    int w;
+
+    w = screenWidth;
+    h = screenHeight;
+    datas->algo.x = -1;
+    while (++datas->algo.x < w)
+    {
+        init_raycasting_var_in_loop(datas, w, h);
+        check_raycasting(datas);
+        check_hit(datas);
+        init_calcul_for_draw_wall(datas, w, h);
         switch(datas->game.map[datas->algo.mapX][datas->algo.mapY])
 		{
 			case 1:  datas->img.color = 0xff0000;    break; //red
@@ -100,6 +119,5 @@ void    ft_raycasting(t_struct *datas)
         if (datas->algo.side == 1)
             datas->img.color /= 2;
         draw(datas);
-        datas->algo.x++;
     }
 }

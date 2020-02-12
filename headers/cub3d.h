@@ -82,9 +82,19 @@ typedef struct      s_struct
 void    draw_sky(t_struct *datas);
 void    draw_flor(t_struct *datas);
 void    draw(t_struct *datas);
-void    keypress(int keyval, t_struct *datas);
-int    *keyparsing(int keyvalue, t_struct *datas);
+int     keypress(int keyval, void *param);
+int     keyparsing(int keyvalue, void *param);
 void    ft_raycasting(t_struct *datas);
+void    map_into_struct(t_struct *datas, int map[mapWidth][mapHeight]);
+int     move_up(t_struct *datas);
+int     move_down(t_struct *datas);
+int     move_right(t_struct *datas);
+int     move_left(t_struct *datas);
+int     quit(t_struct *datas);
+void    init_raycasting_var(t_struct *datas);
+void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
+void	render(t_struct *datas);
+
 
 
 #endif

@@ -1,5 +1,5 @@
 #include "../headers/cub3d.h"
-
+#include "mlx.h"
 
 void    draw_sky(t_struct *datas)
 {
@@ -37,14 +37,15 @@ void    draw_wall(t_struct *datas)
     y = datas->algo.drawStart;
     while (y <= datas->algo.drawEnd)
     {
-        datas->img.datas[y * screenWidth + datas->algo.x] = datas->img.color;
+        datas->img.datas[y * screenHeight + datas->algo.x] = datas->img.color;
         y++;
     }
 }
 
 void    draw(t_struct *datas)
 {
-    draw_sky(datas);
-    draw_flor(datas);
+    //draw_sky(datas);
+    //draw_flor(datas);
     draw_wall(datas);
+    mlx_put_image_to_window(datas->img.ptr, datas->img.win, datas->img.img, 0, 0);
 }
