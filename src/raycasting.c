@@ -1,0 +1,105 @@
+#include "../headers/cub3d.h"
+
+static int ft_abs(double nb)
+{
+	return (nb < 0 ? (double)-nb : (double)nb);
+}
+
+void    init_raycasting_var(t_struct *datas)
+{
+    datas->algo.posX = 22;
+    datas->algo.posY = 12;
+    datas->algo.dirX = -1;
+    datas->algo.dirY = 0;
+    datas->algo.planeX = 0;
+    datas->algo.planeY = 0.66;
+    datas->algo.moveSpeed = 0.05;
+    datas->algo.rotSpeed = 0.05;
+}
+
+void    ft_raycasting(t_struct *datas)
+{
+    int h;
+    int w;
+
+    init_raycasting_var(datas);
+    h = screenHeight;
+    w = screenWidth;
+    datas->algo.x = 0;
+    while (datas->algo.x < w)
+    {
+        datas->algo.cameraX = 2 * datas->algo.x / (double)w - 1;
+        datas->algo.rayDirX =
+        datas->algo.dirX + datas->algo.planeX * datas->algo.cameraX;
+        datas->algo.rayDirY =
+        datas->algo.dirY + datas->algo.planeY * datas->algo.cameraX;
+        datas->algo.mapX = (int)datas->algo.posX;
+        datas->algo.mapY = (int)datas->algo.posY;
+        datas->algo.deltaDistX = (double)ft_abs(1 / datas->algo.rayDirX);
+        datas->algo.deltaDistY = (double)ft_abs(1 / datas->algo.rayDirY);
+        datas->algo.hit = 0;
+        if (datas->algo.rayDirX < 0)
+        {
+            datas->algo.stepX = -1;
+            datas->algo.sideDistX = 
+            (datas->algo.posX - datas->algo.mapX) * datas->algo.deltaDistX;
+        }
+        else
+        {
+            datas->algo.stepX = 1;
+            datas->algo.sideDistX =
+            (datas->algo.mapX + 1.0 - datas->algo.posX) * datas->algo.deltaDistX;                
+        }
+        if (datas->algo.rayDirY < 0)
+        {
+            datas->algo.stepY = -1;
+            datas->algo.sideDistY =
+            (datas->algo.posY - datas->algo.mapY) * datas->algo.deltaDistY;
+        }
+        else
+        {
+            datas->algo.stepY = 1;
+            datas->algo.sideDistY =
+            (datas->algo.mapY + 1.0 - datas->algo.posY) * datas->algo.deltaDistY;
+        }
+        while (datas->algo.hit == 0)
+        {
+            if (datas->algo.sideDistX < datas->algo.sideDistY)
+            {
+                datas->algo.sideDistX += datas->algo.deltaDistX;
+                datas->algo.mapX += datas->algo.stepX;
+                datas->algo.side = 0;
+            }
+            else
+            {
+                datas->algo.sideDistY += datas->algo.deltaDistY;
+                datas->algo.mapY += datas->algo.stepY;
+                datas->algo.side = 1;
+            }
+            if (datas->game.map[datas->algo.mapX][datas->algo.mapY] > 0)
+                datas->algo.hit = 1;
+        }
+        datas->algo.perpWallDist = datas->algo.side == 0 ?
+        (datas->algo.mapX - datas->algo.posX + (1 - datas->algo.stepX) / 2)
+         / datas->algo.rayDirX : (datas->algo.mapY - datas->algo.posY + 
+         (1 - datas->algo.stepY) / 2) / datas->algo.rayDirY;
+         datas->algo.lineHeight = (int)(h / datas->algo.perpWallDist);
+         datas->algo.drawStart = -datas->algo.lineHeight / 2 + h / 2;
+         if (datas->algo.drawStart < 0)
+            datas->algo.drawStart = 0;
+        datas->algo.drawEnd = datas->algo.lineHeight / 2 + h / 2;
+        if (datas->algo.drawEnd >= h)
+            datas->algo.drawEnd = h - 1;
+        switch(datas->game.map[datas->algo.mapX][datas->algo.mapY])
+		{
+			case 1:  datas->img.color = 0xff0000;    break; //red
+			case 2:  datas->img.color = 0x00ff00;  break; //green
+			case 3:  datas->img.color = 0x0000ff;   break; //blue
+			default: datas->img.color = 0xffffff; break; //yellow
+		}
+        if (datas->algo.side == 1)
+            datas->img.color /= 2;
+        draw(datas);
+        datas->algo.x++;
+    }
+}

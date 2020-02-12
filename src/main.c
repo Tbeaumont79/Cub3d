@@ -1,65 +1,61 @@
+#include "../headers/cub3d.h"
 #include "mlx.h"
-#define win_width 1000
-#define heigth_width 1000
-#include <unistd.h>
-#include <stdlib.h>
-void ft_putchar(char c)
+
+void init_structure(t_struct *datas)
 {
-    write(1, &c, 1);
+    datas->img.ptr = mlx_init();
+    datas->img.win = 
+    mlx_new_window(datas->img.ptr, screenWidth, screenHeight, "cub3d");
+    datas->img.img = 
+    mlx_new_image(datas->img.img, screenWidth, screenHeight);
+    datas->img.datas = (int *)mlx_get_data_addr(datas->img.img, &datas->img.bpp
+    , &datas->img.size_line, &datas->img.endian);
 }
 
-void    ft_putnbr(int nb)
-{
-    if (nb == -2147483648)
-    {
-        ft_putchar('-');
-        ft_putchar('2');
-        ft_putnbr(147483648);
-    }
-    if (nb < 0)
-        ft_putchar('-');
-    if (nb > 0)
-        ft_putnbr(nb / 10);
-    ft_putchar((nb % 10) + 48);
-}
 
-int key_press(int key_value, void *param)
+int main(int argc, char **argv)
 {
-    if (key_value == 53)
-        exit(EXIT_SUCCESS);
-    return (key_value);
-}
+    (void)argc;
+    (void)argv;
+    t_struct *datas;
 
-int main()
-{
-    void *ptr;
-    void *win;
-    int *datas;
-    void *img;
-    int bpp;
-    int size_line;
-    int endian;
-    int x = -1;
-    int y = -1;
 
-    ptr = mlx_init();
-    win = mlx_new_window(ptr, win_width, heigth_width, "Title");
-    img = mlx_new_image(ptr, win_width, heigth_width);
-    datas = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
-    while (++x <= heigth_width / 2)
-    {
-        y = -1;
-        while (++y < win_width)
-            datas[x * win_width + y] = 0x96d1c6;
-    }
-    while (++x < heigth_width)
-    {
-        y = -1;
-        while (++y < win_width)
-            datas[x * win_width + y] = 0xdeff8b;
-    }
-    mlx_put_image_to_window(ptr, win, img, 0, 0);
-    mlx_key_hook(win, key_press, (void *)0);
-    mlx_loop(ptr);
+    if (!(datas = malloc(sizeof(t_struct))))
+        return (0);
+    if (!(datas->game.map =
+     (int **)malloc(sizeof(int *) + (mapWidth * mapHeight))))
+        return (0);
+    datas->game.map = {
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+
+    init_structure(datas);
+    //mlx_hook(datas->img.win, 2, 0, keypress, datas);
+    //mlx_key_hook(datas->img.win, keyparsing, datas);
+    ft_raycasting(datas);
+    mlx_put_image_to_window(datas->img.ptr, datas->img.win, datas->img.img, 0, 0);
+    mlx_loop(datas->img.ptr);
     return (0);
 }
