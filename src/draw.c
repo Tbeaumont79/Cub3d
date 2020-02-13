@@ -3,31 +3,22 @@
 
 void    draw_sky(t_struct *datas)
 {
-    int x;
     int y;
 
-    x = -1;
-    while (++x < screenWidth / 2)
-    {
-        y = -1;
-        while (++y < screenHeight)
-            datas->img.datas[x * screenHeight + y] = 0x0000FF;
-    }
-    datas->img.pixel = x;
+
+    y = -1;
+    while (++y < screenHeight / 2)
+        datas->img.datas[y * screenHeight + datas->algo.x] = 0xf8b195;
 }
 
 void    draw_flor(t_struct *datas)
 {
-    int x;
     int y;
     
-    x = datas->img.pixel;
-    while (++x < screenWidth)
-    {
-        y = -1;
-        while (++y < screenHeight)
-            datas->img.datas[x * screenHeight + y] = 0x00FF00;
-    }
+
+    y = screenHeight / 2;
+    while (++y < screenHeight)
+        datas->img.datas[y * screenHeight + datas->algo.x] = 0x27496d;
 }
 
 void    draw_wall(t_struct *datas)
@@ -44,7 +35,7 @@ void    draw_wall(t_struct *datas)
 
 void    draw(t_struct *datas)
 {
-    //draw_sky(datas);
-    //draw_flor(datas);
+    draw_sky(datas);
+    draw_flor(datas);
     draw_wall(datas);
 }

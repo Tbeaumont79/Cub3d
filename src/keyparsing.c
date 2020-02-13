@@ -10,6 +10,20 @@ int    keypress(int keyval, void *param)
     datas->game.key[key_right] = keyval == 124 ? keyval : 0;
     datas->game.key[key_left] = keyval == 123 ? keyval : 0;
     datas->game.key[key_escape] = keyval == 53 ? keyval : 0;
+    keyparsing(keyval, datas);
+    return (0);
+}
+
+int     keyunpress(int keyval, void *param)
+{
+    t_struct *datas;
+
+    datas = (t_struct *)param;
+    datas->game.key[key_up] = keyval == 126 ? 0 : 0;
+    datas->game.key[key_down] = keyval == 125 ? 0 : 0;
+    datas->game.key[key_right] = keyval == 124 ? 0 : 0;
+    datas->game.key[key_left] = keyval == 123 ? 0 : 0;
+    datas->game.key[key_escape] = keyval == 53 ? 0 : 0;
     return (0);
 }
 

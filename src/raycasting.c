@@ -13,8 +13,8 @@ void    init_raycasting_var(t_struct *datas)
     datas->algo.dirY = 0;
     datas->algo.planeX = 0;
     datas->algo.planeY = 0.66;
-    datas->algo.moveSpeed = 0.10;
-    datas->algo.rotSpeed = 0.10;
+    datas->algo.moveSpeed = 0.07;
+    datas->algo.rotSpeed = 0.07;
 }
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)

@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 typedef enum s_value
 {
@@ -59,6 +60,19 @@ typedef struct      s_game
     int **map;
 }                   t_game;
 
+typedef struct      s_tex
+{
+    void *tex;
+    char *name;
+    int endian;
+    int size_line;
+    int bpp;
+    int *datas;
+    int t_h;
+    int t_w;
+    void *t_img;
+}                   t_tex;
+
 typedef struct      s_image
 {
     void *ptr;
@@ -75,8 +89,9 @@ typedef struct      s_image
 typedef struct      s_struct
 {
     t_image img;
-    t_algo algo;
-    t_game game;
+    t_algo  algo;
+    t_game  game;
+    t_tex   tex;
 }                   t_struct;
 
 void    draw_sky(t_struct *datas);
@@ -95,6 +110,7 @@ void    init_raycasting_var(t_struct *datas);
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void	render(t_struct *datas);
 void    init_img(t_struct *datas);
+int     keyunpress(int keyval, void *param);
 
 
 

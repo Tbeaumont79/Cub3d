@@ -62,8 +62,8 @@ int main(int argc, char **argv)
     init_structure(datas);
 	map_into_struct(datas, worldMap);
     init_raycasting_var(datas);
-	mlx_hook(datas->img.win, 2, 0, keypress, datas);
-	mlx_key_hook(datas->img.win, keyparsing, datas);
+	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);
+	mlx_hook(datas->img.win, 3, (1L << 1), keyunpress, datas);
 	ft_raycasting(datas);
     mlx_loop(datas->img.ptr);
     return (0);
