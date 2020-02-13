@@ -47,5 +47,4 @@ void    draw(t_struct *datas)
     //draw_sky(datas);
     //draw_flor(datas);
     draw_wall(datas);
-    mlx_put_image_to_window(datas->img.ptr, datas->img.win, datas->img.img, 0, 0);
 }

@@ -1,6 +1,6 @@
 #include "../headers/cub3d.h"
 
-static int ft_abs(double nb)
+static double ft_abs(double nb)
 {
 	return (nb < 0 ? (double)-nb : (double)nb);
 }
@@ -13,8 +13,8 @@ void    init_raycasting_var(t_struct *datas)
     datas->algo.dirY = 0;
     datas->algo.planeX = 0;
     datas->algo.planeY = 0.66;
-    datas->algo.moveSpeed = 0.05;
-    datas->algo.rotSpeed = 0.05;
+    datas->algo.moveSpeed = 0.10;
+    datas->algo.rotSpeed = 0.10;
 }
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
@@ -103,6 +103,7 @@ void    ft_raycasting(t_struct *datas)
     w = screenWidth;
     h = screenHeight;
     datas->algo.x = -1;
+    init_img(datas);
     while (++datas->algo.x < w)
     {
         init_raycasting_var_in_loop(datas, w, h);
@@ -120,4 +121,5 @@ void    ft_raycasting(t_struct *datas)
             datas->img.color /= 2;
         draw(datas);
     }
+    render(datas);
 }

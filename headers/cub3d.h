@@ -94,6 +94,7 @@ int     quit(t_struct *datas);
 void    init_raycasting_var(t_struct *datas);
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void	render(t_struct *datas);
+void    init_img(t_struct *datas);
 
 
 

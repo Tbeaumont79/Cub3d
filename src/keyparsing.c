@@ -27,10 +27,6 @@ int    keyparsing(int keyvalue, void *param)
         if (keyvalue == datas->game.key[i])
             break ;
     if (i >= 0 && i < key_len)
-    {
-        fct[i](datas);
-        render(datas);
-        ft_raycasting(datas);   
-    }
+        return (fct[i](datas));
     return (0);
 }

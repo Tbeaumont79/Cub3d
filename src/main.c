@@ -6,18 +6,20 @@ void init_structure(t_struct *datas)
     datas->img.ptr = mlx_init();
     datas->img.win = 
     mlx_new_window(datas->img.ptr, screenWidth, screenHeight, "cub3d");
-    datas->img.img = 
-    mlx_new_image(datas->img.ptr, screenWidth, screenHeight);
-    datas->img.datas = (int *)mlx_get_data_addr(datas->img.img, &(datas->img.bpp)
+}
+
+void init_img(t_struct *datas)
+{
+	datas->img.img =
+	mlx_new_image(datas->img.ptr, screenWidth,screenHeight);
+	datas->img.datas = (int *)mlx_get_data_addr(datas->img.img, &(datas->img.bpp)
     , &(datas->img.size_line), &(datas->img.endian));
 }
 
 void	render(t_struct *datas)
 {
-    mlx_clear_window(datas->img.ptr, datas->img.win);
-	datas->img.img = mlx_new_image(datas->img.ptr, screenWidth, screenHeight);
-	datas->img.datas = (int *)mlx_get_data_addr(datas->img.img, &(datas->img.bpp)
-    , &(datas->img.size_line), &(datas->img.endian));
+    mlx_put_image_to_window(datas->img.ptr, datas->img.win, datas->img.img, 0, 0);
+	mlx_destroy_image(datas->img.ptr, datas->img.img);
 }
 
 int main(int argc, char **argv)
@@ -62,10 +64,7 @@ int main(int argc, char **argv)
     init_raycasting_var(datas);
 	mlx_hook(datas->img.win, 2, 0, keypress, datas);
 	mlx_key_hook(datas->img.win, keyparsing, datas);
-	render(datas);
-    ft_raycasting(datas);
+	ft_raycasting(datas);
     mlx_loop(datas->img.ptr);
-	free(datas->game.map);
-	free(datas);
     return (0);
 }
