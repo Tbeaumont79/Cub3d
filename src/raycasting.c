@@ -65,15 +65,15 @@ void    check_hit(t_struct *datas)
     {
         if (datas->algo.sideDistX < datas->algo.sideDistY)
         {
+            datas->algo.side = datas->algo.rayDirX < 0 ? 0 : 1;
             datas->algo.sideDistX += datas->algo.deltaDistX;
             datas->algo.mapX += datas->algo.stepX;
-            datas->algo.side = 0;
         }
         else
         {
+            datas->algo.side = datas->algo.rayDirY < 0 ? 2 : 3;
             datas->algo.sideDistY += datas->algo.deltaDistY;
             datas->algo.mapY += datas->algo.stepY;
-            datas->algo.side = 1;
         }
         if (datas->game.map[datas->algo.mapX][datas->algo.mapY] > 0)
             datas->algo.hit = 1;
@@ -97,11 +97,6 @@ void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
         datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirY : 
         datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirX;
         datas->algo.wallX -= floor((datas->algo.wallX));
-        datas->algo.texX = (int)(datas->algo.wallX * (double)texWidth);
-        if (datas->algo.side == 0 && datas->algo.rayDirX > 0)
-            datas->algo.texX = texWidth - datas->algo.texX - 1;
-        if (datas->algo.side == 1 && datas->algo.rayDirY < 0)
-            datas->algo.texX = texWidth - datas->algo.texX - 1;
         datas->algo.step = 1.0 * texHeight / datas->algo.lineHeight;
         datas->algo.texPos = (datas->algo.drawStart - h / 2 + datas->algo.lineHeight / 2) *
         datas->algo.step;   

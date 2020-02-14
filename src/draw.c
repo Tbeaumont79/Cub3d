@@ -22,18 +22,23 @@ void    draw_flor(t_struct *datas)
 void    draw_wall(t_struct *datas)
 {
     int y;
+    int val;
+    int color;
 
     y = datas->algo.drawStart;
-    while (y <= datas->algo.drawEnd)
+    while (y < datas->algo.drawEnd)
     {
-        datas->img.datas[y * screenHeight + datas->algo.x] = datas->img.color;
+        val = y * 256 - screenHeight * 128 + datas->algo.lineHeight * 128;
+        choose_tex(datas, &color, val);
+        datas->img.datas[y * screenHeight + datas->algo.x] = color;
         y++;
     }
 }
 
 void    draw(t_struct *datas)
 {
-    // faire un fnc qui choisie une texture en fonction de datas->algo.side 
+    ft_get_texture(datas);
+    init_algo_tex(datas);
     draw_sky(datas);
     draw_flor(datas);
     draw_wall(datas);

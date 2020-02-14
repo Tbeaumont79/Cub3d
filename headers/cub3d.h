@@ -56,8 +56,8 @@ typedef struct       s_algo
     double oldDirX;
     double oldPlaneX;
     int x;
-    int texX;
-    int textY;
+    int *texX;
+    int *texY;
     int texNum;
     double texPos;
     double step;
@@ -73,7 +73,7 @@ typedef struct      s_tex
 {
     void *tex_img;
     void *tex;
-    char *name;
+    char **name;
     int endian;
     int size_line;
     int bpp;
@@ -120,6 +120,9 @@ void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void	render(t_struct *datas);
 void    init_img(t_struct *datas);
 int     keyunpress(int keyval, void *param);
+void    choose_tex(t_struct *datas, int *color, int val);
+void    init_algo_tex(t_struct *datas);
+void    ft_get_texture(t_struct *datas);
 
 
 
