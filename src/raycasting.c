@@ -93,6 +93,18 @@ void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
         datas->algo.drawEnd = datas->algo.lineHeight / 2 + h / 2;
         if (datas->algo.drawEnd >= h)
             datas->algo.drawEnd = h - 1;
+        datas->algo.wallX = datas->algo.side == 0 ?
+        datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirY : 
+        datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirX;
+        datas->algo.wallX -= floor((datas->algo.wallX));
+        datas->algo.texX = (int)(datas->algo.wallX * (double)texWidth);
+        if (datas->algo.side == 0 && datas->algo.rayDirX > 0)
+            datas->algo.texX = texWidth - datas->algo.texX - 1;
+        if (datas->algo.side == 1 && datas->algo.rayDirY < 0)
+            datas->algo.texX = texWidth - datas->algo.texX - 1;
+        datas->algo.step = 1.0 * texHeight / datas->algo.lineHeight;
+        datas->algo.texPos = (datas->algo.drawStart - h / 2 + datas->algo.lineHeight / 2) *
+        datas->algo.step;   
 }
 
 void    ft_raycasting(t_struct *datas)

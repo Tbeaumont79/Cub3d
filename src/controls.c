@@ -2,7 +2,7 @@
 #include "mlx.h"
 int    quit(t_struct *datas)
 {
-    exit(EXIT_SUCCESS);
+    exit(1);
     return (0);
 }
 

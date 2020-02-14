@@ -5,7 +5,9 @@
 # define screenHeight 1000
 # define mapWidth 24
 # define mapHeight 24
-# define key_len 5
+# define key_len 6
+# define texWidth 64
+# define texHeight 64
 
 #include <stdio.h>
 #include <math.h>
@@ -19,7 +21,8 @@ typedef enum s_value
     key_right,
     key_left,
     key_escape,
-}              key_value;
+    key_red,
+}            t_value;
 
 typedef struct       s_algo
 {
@@ -29,6 +32,7 @@ typedef struct       s_algo
     double dirY;
     double planeX;
     double planeY;
+    double wallX;
     double moveSpeed;
     double rotSpeed;
     double cameraX;
@@ -52,6 +56,11 @@ typedef struct       s_algo
     double oldDirX;
     double oldPlaneX;
     int x;
+    int texX;
+    int textY;
+    int texNum;
+    double texPos;
+    double step;
 }                   t_algo;
 
 typedef struct      s_game
@@ -62,6 +71,7 @@ typedef struct      s_game
 
 typedef struct      s_tex
 {
+    void *tex_img;
     void *tex;
     char *name;
     int endian;
@@ -70,7 +80,6 @@ typedef struct      s_tex
     int *datas;
     int t_h;
     int t_w;
-    void *t_img;
 }                   t_tex;
 
 typedef struct      s_image
@@ -91,7 +100,7 @@ typedef struct      s_struct
     t_image img;
     t_algo  algo;
     t_game  game;
-    t_tex   tex;
+    t_tex   tex[4];
 }                   t_struct;
 
 void    draw_sky(t_struct *datas);
