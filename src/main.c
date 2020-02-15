@@ -25,12 +25,12 @@ void	render(t_struct *datas)
 int main(int argc, char **argv)
 {
     (void)argc;
-    (void)argv;
     t_struct *datas;
 
 
     if (!(datas = (t_struct *)malloc(sizeof(t_struct))))
         return (0);
+	ft_read_file(argv[1], datas);
 		    int worldMap[mapWidth][mapHeight]=
     {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

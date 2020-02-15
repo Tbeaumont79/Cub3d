@@ -8,11 +8,13 @@
 # define key_len 6
 # define texWidth 64
 # define texHeight 64
+# define BUFFER_SIZE 32
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 typedef enum s_value
 {
@@ -67,13 +69,15 @@ typedef struct      s_game
 {
     int key[key_len];
     int **map;
+    int w_h;
+    int w_w;
 }                   t_game;
 
 typedef struct      s_tex
 {
     void *tex_img;
     void *tex;
-    char **name;
+    char *name;
     int endian;
     int size_line;
     int bpp;
@@ -81,6 +85,11 @@ typedef struct      s_tex
     int t_h;
     int t_w;
 }                   t_tex;
+
+typedef struct      s_sprit
+{
+    char *name;
+}                   t_sprit;
 
 typedef struct      s_image
 {
@@ -100,6 +109,7 @@ typedef struct      s_struct
     t_image img;
     t_algo  algo;
     t_game  game;
+    t_sprit sprit;
     t_tex   tex[4];
 }                   t_struct;
 
@@ -123,6 +133,14 @@ int     keyunpress(int keyval, void *param);
 void    choose_tex(t_struct *datas, int *color, int val);
 void    init_algo_tex(t_struct *datas);
 void    ft_get_texture(t_struct *datas);
+int     ft_error(char *s);
+void    ft_puterr(char *err, char *s);
+char	*gnl_strjoin(char const *s1, char *s2);
+int		get_next_line(int fd, char **line);
+int     add_tex_path(t_struct *datas, char *s, int i, char tex[4][3]);
+int     add_reso(t_struct *datas, char *s);
+ int    ft_read_file(char *filename, t_struct *datas);
+
 
 
 
