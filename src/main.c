@@ -61,6 +61,7 @@ int main(int argc, char **argv)
 
     init_structure(datas);
 	map_into_struct(datas, worldMap);
+	ft_get_texture(datas);
     init_raycasting_var(datas);
 	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);
 	mlx_hook(datas->img.win, 3, (1L << 1), keyunpress, datas);

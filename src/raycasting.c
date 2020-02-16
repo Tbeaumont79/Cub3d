@@ -19,6 +19,7 @@ void    init_raycasting_var(t_struct *datas)
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
 {
+    (void)h;
     datas->algo.cameraX = 2 * datas->algo.x / (double)w - 1;
     datas->algo.rayDirX =
     datas->algo.dirX + datas->algo.planeX * datas->algo.cameraX;
@@ -82,7 +83,8 @@ void    check_hit(t_struct *datas)
 
 void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
 {
-        datas->algo.perpWallDist = datas->algo.side == 0 ?
+        (void)w;
+        datas->algo.perpWallDist = datas->algo.side == 0 || datas->algo.side == 1 ?
         (datas->algo.mapX - datas->algo.posX + (1 - datas->algo.stepX) / 2)
          / datas->algo.rayDirX : (datas->algo.mapY - datas->algo.posY + 
          (1 - datas->algo.stepY) / 2) / datas->algo.rayDirY;
@@ -93,13 +95,10 @@ void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
         datas->algo.drawEnd = datas->algo.lineHeight / 2 + h / 2;
         if (datas->algo.drawEnd >= h)
             datas->algo.drawEnd = h - 1;
-        datas->algo.wallX = datas->algo.side == 0 ?
-        datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirY : 
+        datas->algo.wallX = datas->algo.side == 0 || datas->algo.side == 1 ?
+        datas->algo.posY + datas->algo.perpWallDist * datas->algo.rayDirY : 
         datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirX;
         datas->algo.wallX -= floor((datas->algo.wallX));
-        datas->algo.step = 1.0 * texHeight / datas->algo.lineHeight;
-        datas->algo.texPos = (datas->algo.drawStart - h / 2 + datas->algo.lineHeight / 2) *
-        datas->algo.step;   
 }
 
 void    ft_raycasting(t_struct *datas)

@@ -58,8 +58,8 @@ typedef struct       s_algo
     double oldDirX;
     double oldPlaneX;
     int x;
-    int *texX;
-    int *texY;
+    int texX[4];
+    int texY[4];
     int texNum;
     double texPos;
     double step;
@@ -69,6 +69,7 @@ typedef struct      s_game
 {
     int key[key_len];
     int **map;
+    int wall;
     int w_h;
     int w_w;
 }                   t_game;
@@ -137,9 +138,12 @@ int     ft_error(char *s);
 void    ft_puterr(char *err, char *s);
 char	*gnl_strjoin(char const *s1, char *s2);
 int		get_next_line(int fd, char **line);
-int     add_tex_path(t_struct *datas, char *s, int i, char tex[4][3]);
 int     add_reso(t_struct *datas, char *s);
- int    ft_read_file(char *filename, t_struct *datas);
+int     ft_read_file(char *filename, t_struct *datas);
+int     add_tex_path(t_struct *datas, char *s, int i);
+void    skip_char(char **s, int c);
+int     add_sprit_path(t_struct *datas, char *s);
+int     ft_get_color(t_struct *datas, char *s);
 
 
 

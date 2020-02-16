@@ -37,7 +37,6 @@ void    draw_wall(t_struct *datas)
 
 void    draw(t_struct *datas)
 {
-    ft_get_texture(datas);
     init_algo_tex(datas);
     draw_sky(datas);
     draw_flor(datas);
