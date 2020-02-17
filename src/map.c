@@ -39,7 +39,6 @@ void    map_into_struct(t_struct *datas, char *s)
 
     ft_check_map(datas, s);
     i = 0;
-    printf("datas->h %d datas->w  %d\n", datas->game.m_h, datas->game.m_w);
     if (!(datas->game.map = malloc(sizeof(int *) * datas->game.m_h)))
         return ;
     while (i < datas->game.m_h)
@@ -49,13 +48,17 @@ void    map_into_struct(t_struct *datas, char *s)
             return ;
         while (j < datas->game.m_w)
         {
+            // check aussi le premier char de chaque ligne et le dernier
             if (ft_isdigit(*s) || ft_is_dir(*s))
             {
+                if ((i == 0 && *s != '1') || (i + 1 == datas->game.m_h && *s != '1'))
+                    ft_error("map is not closed !");
                 datas->game.map[i][j] = *s - '0';
                 j++;
             }
             s++;
         }
+
         i++;
     }
 }

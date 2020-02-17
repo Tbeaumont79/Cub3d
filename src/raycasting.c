@@ -1,10 +1,5 @@
 #include "../headers/cub3d.h"
 
-static double ft_abs(double nb)
-{
-	return (nb < 0 ? (double)-nb : (double)nb);
-}
-
 void    init_raycasting_var(t_struct *datas)
 {
     datas->algo.posX = 1;
@@ -27,8 +22,8 @@ void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
     datas->algo.dirY + datas->algo.planeY * datas->algo.cameraX;
     datas->algo.mapX = (int)datas->algo.posX;
     datas->algo.mapY = (int)datas->algo.posY;
-    datas->algo.deltaDistX = (double)ft_abs(1 / datas->algo.rayDirX);
-    datas->algo.deltaDistY = (double)ft_abs(1 / datas->algo.rayDirY);
+    datas->algo.deltaDistX = (double)fabs(1 / datas->algo.rayDirX);
+    datas->algo.deltaDistY = (double)fabs(1 / datas->algo.rayDirY);
     datas->algo.hit = 0;
 }
 

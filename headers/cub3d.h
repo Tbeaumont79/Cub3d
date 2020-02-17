@@ -40,9 +40,10 @@ typedef struct       s_algo
     double cameraX;
     double rayDirX;
     double rayDirY;
+    double zbuff[screenWidth];
     int mapX;
     int mapY;
-    int map[mapWidth][mapHeight];
+    int **map;
     double sideDistX;
     double sideDistY;
     double deltaDistX;
@@ -63,6 +64,20 @@ typedef struct       s_algo
     int texNum;
     double texPos;
     double step;
+    double s_x;
+    double s_y;
+    double invet;
+    double trans_x;
+    double trans_x;
+    int screenx;
+    int s_h;
+    int s_w;
+    int dend_x;
+    int dend_y;
+    int dstart_x;
+    int dstart_y;
+    int sprit_tex_y;
+    int sprit_tex_x;
 }                   t_algo;
 
 typedef struct      s_game
@@ -70,6 +85,7 @@ typedef struct      s_game
     int key[key_len];
     int **map;
     int wall;
+    int num_sprit;
     int m_h;
     int m_w;
     int w_h;
@@ -91,7 +107,11 @@ typedef struct      s_tex
 
 typedef struct      s_sprit
 {
+    int *sprite_order;
+    int *sprite_distance;
     char *name;
+    int posx;
+    int posy;
 }                   t_sprit;
 
 typedef struct      s_image
@@ -112,7 +132,7 @@ typedef struct      s_struct
     t_image img;
     t_algo  algo;
     t_game  game;
-    t_sprit sprit;
+    t_sprit *sprit;
     t_tex   tex[4];
 }                   t_struct;
 
