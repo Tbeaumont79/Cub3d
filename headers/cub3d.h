@@ -70,6 +70,8 @@ typedef struct      s_game
     int key[key_len];
     int **map;
     int wall;
+    int m_h;
+    int m_w;
     int w_h;
     int w_w;
 }                   t_game;
@@ -120,7 +122,7 @@ void    draw(t_struct *datas);
 int     keypress(int keyval, void *param);
 int     keyparsing(int keyvalue, void *param);
 void    ft_raycasting(t_struct *datas);
-void    map_into_struct(t_struct *datas, int map[mapWidth][mapHeight]);
+void    map_into_struct(t_struct *datas, char *s);
 int     move_up(t_struct *datas);
 int     move_down(t_struct *datas);
 int     move_right(t_struct *datas);
@@ -144,6 +146,7 @@ int     add_tex_path(t_struct *datas, char *s, int i);
 void    skip_char(char **s, int c);
 int     add_sprit_path(t_struct *datas, char *s);
 int     ft_get_color(t_struct *datas, char *s);
+int     ft_check_map(t_struct *datas, char *s);
 
 
 

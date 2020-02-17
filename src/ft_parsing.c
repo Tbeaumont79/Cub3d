@@ -20,6 +20,7 @@ int     ft_parse_text(char *s, t_struct *datas)
 
 int     ft_parse(char *s, t_struct *datas)
 {
+
     add_reso(datas, s);
     ft_parse_text(s, datas);
     add_sprit_path(datas, s);
@@ -31,16 +32,27 @@ int     ft_parse(char *s, t_struct *datas)
  {
      int    fd;
      char   *line;
+     char   *s;
+     int    ret;
 
+    s = NULL;
+    ret = 0;
      if (!ft_check_file_name(filename))
         return (-1);
     if ((fd = open(filename, O_RDONLY)) == -1)
         ft_error("not a valid file");
-    while ((get_next_line(fd, &line)) > 0)
+    while ((ret = get_next_line(fd, &line)) >= 0)
     {
         ft_parse(line, datas);
-       // printf("%s\n", line);
+        if (*line == '1')
+        {
+            s = gnl_strjoin(s, line); // pensez a free et evitez les pertes d'address !
+            s = gnl_strjoin(s, "\n");
+        }
         free(line);
+        if (ret == 0)
+            break ;
     }
+    map_into_struct(datas, s);
     return (0);
  }

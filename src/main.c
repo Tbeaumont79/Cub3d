@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 
     if (!(datas = (t_struct *)malloc(sizeof(t_struct))))
         return (0);
+	datas->game.m_h = 0;
+	datas->game.m_w = 0;
 	ft_read_file(argv[1], datas);
 		    int worldMap[mapWidth][mapHeight]=
     {
@@ -60,7 +62,7 @@ int main(int argc, char **argv)
     };
 
     init_structure(datas);
-	map_into_struct(datas, worldMap);
+	//map_into_struct(datas, worldMap);
 	ft_get_texture(datas);
     init_raycasting_var(datas);
 	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);

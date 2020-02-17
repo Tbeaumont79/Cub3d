@@ -1,41 +1,60 @@
 #include "../headers/cub3d.h"
+#include "../Libft/libft.h"
+
 // faire le check de la map faire en sorte que tout soit good avant de l'ajouter dans la structure !
 // gerer le cas ou il y a pas de spawn et bien gerer que la map soit fermer !!
 // la map peu ne pas avoir de sprit
 
-void    ft_count(char *s, t_struct *datas)
+int     ft_is_dir(char c)
 {
-    datas->game.wall = s[i] == '1' ? datas->game.wall + 1 : 0;
+    return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-void    ft_check_map(char *s, t_struct *datas)
+int     ft_check_map(t_struct *datas, char *s)
 {
+    int j;
     int i;
 
-    i = -1;
-    if (s[i] == '1')
-        while (s[++i] == '1')
-            ft_count(s[i]);
-    
+    j = 0;
+    i = 0;
+    while (s[i])
+    {
+        while (s[j] != '\n')
+        {
+            if (ft_isdigit(s[j]) || ft_is_dir(s[j]))
+                datas->game.m_w++;
+            j++;
+        }
+        if (s[i] == '\n')
+            datas->game.m_h++;
+        i++;
+    }
+    return (0);
 }
 
-void    map_into_struct(t_struct *datas, int map[mapWidth][mapHeight])
+void    map_into_struct(t_struct *datas, char *s)
 {
     int i;
     int j;
 
+    ft_check_map(datas, s);
     i = 0;
-	if (!(datas->game.map = (int **)malloc(sizeof(int*) + (mapWidth * mapHeight) + 1)))
-		return ;
-    while (i < mapHeight)
+    printf("datas->h %d datas->w  %d\n", datas->game.m_h, datas->game.m_w);
+    if (!(datas->game.map = malloc(sizeof(int *) * datas->game.m_h)))
+        return ;
+    while (i < datas->game.m_h)
     {
         j = 0;
-        if (!(datas->game.map[i] = (int *)malloc(sizeof(int) * mapHeight + 1)))
+        if (!(datas->game.map[i] = malloc(sizeof(int) * datas->game.m_w)))
             return ;
-        while (j < mapWidth)
+        while (j < datas->game.m_w)
         {
-            datas->game.map[i][j] = map[i][j];
-            j++;
+            if (ft_isdigit(*s) || ft_is_dir(*s))
+            {
+                datas->game.map[i][j] = *s - '0';
+                j++;
+            }
+            s++;
         }
         i++;
     }
