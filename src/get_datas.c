@@ -13,11 +13,14 @@ int             add_tex_path(t_struct *datas, char *s, int i)
 
     j = 0;
     skip_char(&s, ' ');
-    while (*s != '.')
-        s++; // <-- pas ouf comme methode reflechir a autre chose !
     if (*s)
         datas->tex[i].name = ft_strdup(s); // <--- NEED TO FREE !!!!!!!!!
     return (0);
+}
+
+unsigned long ft_dec_to_hexa(int r, int g, int b)
+{
+    return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
 
 int            ft_get_color(t_struct *datas, char *s)
@@ -25,12 +28,12 @@ int            ft_get_color(t_struct *datas, char *s)
     int r;
     int g;
     int b;
+    unsigned long hexa_num;
 
     r = 0;
-    g = 0;
+    g = 0;  
     b = 0;
     skip_char(&s, ' ');
-    (void)datas;
     if (*s == 'F')
     {
         s++;
@@ -39,7 +42,17 @@ int            ft_get_color(t_struct *datas, char *s)
         g = ft_atoi((const char **)&s);
         skip_char(&s, ',');
         b = ft_atoi((const char **)&s);
-        // faire un atoi puis un itoa puis une convertion en int quand c'est de l'hexa
+        datas->game.flor_color = ft_dec_to_hexa(r, g, b);     
+    }
+    if (*s == 'C')
+    {
+        s++;
+        r = ft_atoi((const char **)&s);
+        skip_char(&s, ',');
+        g = ft_atoi((const char **)&s);
+        skip_char(&s, ',');
+        b = ft_atoi((const char **)&s);
+        datas->game.rof_color = ft_dec_to_hexa(r, g, b);     
     }
     return (0);
 }
@@ -47,11 +60,12 @@ int            ft_get_color(t_struct *datas, char *s)
 int            add_sprit_path(t_struct *datas, char *s)
 {
     skip_char(&s, ' ');
-    if (*s == 'S')
+    if (*s == 'S' && *(s + 1) != 'O')
     {
         s++;
         skip_char(&s, ' ');
-        datas->sprit.name = ft_strdup(s); // <---- NEED TO FREE !!!!!
+        printf("%s\n", s);
+        datas->algo.s_name = ft_strdup(s); // <---- NEED TO FREE !!!!!
     }
     else
         return (6);

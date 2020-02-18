@@ -32,7 +32,7 @@ int     ft_check_map(t_struct *datas, char *s)
     return (0);
 }
 
-void    map_into_struct(t_struct *datas, char *s)
+void    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la gestion d'erreur ! 
 {
     int i;
     int j;
@@ -51,8 +51,16 @@ void    map_into_struct(t_struct *datas, char *s)
             // check aussi le premier char de chaque ligne et le dernier
             if (ft_isdigit(*s) || ft_is_dir(*s))
             {
-                if ((i == 0 && *s != '1') || (i + 1 == datas->game.m_h && *s != '1'))
-                    ft_error("map is not closed !");
+                if ((i == 0 && *s != '1') || (i + 1 == datas->game.m_h && *s != '1') ||
+                (*s != '1' && j + 1 == datas->game.m_w))
+                    return ;
+                if (ft_is_dir(*s))
+                {
+                    datas->game.spaw_dir = *s - '0';
+                    datas->game.num_spawn += 1;
+                }
+                if (*s == '2')
+                    datas->game.num_sprit += 1; // potentiellement lui define ca posx et sa poseY a confirme   
                 datas->game.map[i][j] = *s - '0';
                 j++;
             }

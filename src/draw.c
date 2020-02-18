@@ -7,7 +7,7 @@ void    draw_sky(t_struct *datas)
 
     y = -1;
     while (++y < screenHeight / 2)
-        datas->img.datas[y * screenHeight + datas->algo.x] = 0xf8b195;
+        datas->img.datas[y * screenHeight + datas->algo.x] = datas->game.rof_color;
 }
 
 void    draw_flor(t_struct *datas)
@@ -16,7 +16,7 @@ void    draw_flor(t_struct *datas)
     
     y = screenHeight / 2;
     while (++y < screenHeight)
-        datas->img.datas[y * screenHeight + datas->algo.x] = 0x27496d;  
+        datas->img.datas[y * screenHeight + datas->algo.x] = datas->game.flor_color;  
 }
 
 void    draw_wall(t_struct *datas)

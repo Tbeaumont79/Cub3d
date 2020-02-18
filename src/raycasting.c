@@ -9,7 +9,7 @@ void    init_raycasting_var(t_struct *datas)
     datas->algo.planeX = 0;
     datas->algo.planeY = 0.66;
     datas->algo.moveSpeed = 0.1;
-    datas->algo.rotSpeed = 0.07;
+    datas->algo.rotSpeed = 0.1;
 }
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
@@ -111,15 +111,6 @@ void    ft_raycasting(t_struct *datas)
         check_raycasting(datas);
         check_hit(datas);
         init_calcul_for_draw_wall(datas, w, h);
-        switch(datas->game.map[datas->algo.mapX][datas->algo.mapY])
-		{
-			case 1:  datas->img.color = 0xff0000;    break; //red
-			case 2:  datas->img.color = 0x00ff00;  break; //green
-			case 3:  datas->img.color = 0x0000ff;   break; //blue
-			default: datas->img.color = 0xffffff; break; //yellow
-		}
-        if (datas->algo.side == 1)
-            datas->img.color /= 2;
         draw(datas);
     }
     render(datas);

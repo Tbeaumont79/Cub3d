@@ -4,8 +4,8 @@ SO ../textures/mossy.xpm
 WE ../textures/eagle.xpm
 EA ../textures/wood.xpm
 S ../textures/barrel.xpm
-F 220,100,0
-C 225,30,0
+F 0,3,255
+C 255,0,0
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 1 0 1 1 0 0 0 0 0 1 1 1 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 1

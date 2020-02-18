@@ -68,7 +68,6 @@ typedef struct       s_algo
     double s_y;
     double invet;
     double trans_x;
-    double trans_x;
     int screenx;
     int s_h;
     int s_w;
@@ -78,14 +77,19 @@ typedef struct       s_algo
     int dstart_y;
     int sprit_tex_y;
     int sprit_tex_x;
+    char *s_name;
 }                   t_algo;
 
 typedef struct      s_game
 {
     int key[key_len];
+    int spaw_dir;
+    int num_spawn;
     int **map;
     int wall;
     int num_sprit;
+    unsigned long flor_color;
+    unsigned long rof_color;
     int m_h;
     int m_w;
     int w_h;
@@ -109,7 +113,6 @@ typedef struct      s_sprit
 {
     int *sprite_order;
     int *sprite_distance;
-    char *name;
     int posx;
     int posy;
 }                   t_sprit;
