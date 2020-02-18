@@ -6,17 +6,17 @@ void    draw_sky(t_struct *datas)
     int y;
 
     y = -1;
-    while (++y < screenHeight / 2)
-        datas->img.datas[y * screenHeight + datas->algo.x] = datas->game.rof_color;
+    while (++y < datas->game.w_h / 2)
+        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = datas->game.rof_color;
 }
 
 void    draw_flor(t_struct *datas)
 {
     int y;
     
-    y = screenHeight / 2;
-    while (++y < screenHeight)
-        datas->img.datas[y * screenHeight + datas->algo.x] = datas->game.flor_color;  
+    y = datas->game.w_h / 2;
+    while (++y < datas->game.w_h)
+        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = datas->game.flor_color;  
 }
 
 void    draw_wall(t_struct *datas)
@@ -26,11 +26,11 @@ void    draw_wall(t_struct *datas)
     int color;
 
     y = datas->algo.drawStart;
-    while (y < datas->algo.drawEnd)
+    while (y <= datas->algo.drawEnd)
     {
-        val = y * 256 - screenHeight * 128 + datas->algo.lineHeight * 128;
+        val = y * 256 - datas->game.w_h * 128 + datas->algo.lineHeight * 128;
         choose_tex(datas, &color, val);
-        datas->img.datas[y * screenHeight + datas->algo.x] = color;
+        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = color;
         y++;
     }
 }

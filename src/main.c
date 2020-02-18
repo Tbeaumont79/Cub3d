@@ -5,13 +5,13 @@ void init_structure(t_struct *datas)
 {
     datas->img.ptr = mlx_init();
     datas->img.win = 
-    mlx_new_window(datas->img.ptr, screenWidth, screenHeight, "cub3d");
+    mlx_new_window(datas->img.ptr, datas->game.w_w, datas->game.w_h, "cub3d");
 }
 
 void init_img(t_struct *datas)
 {
 	datas->img.img =
-	mlx_new_image(datas->img.ptr, screenWidth,screenHeight);
+	mlx_new_image(datas->img.ptr, datas->game.w_w, datas->game.w_h);
 	datas->img.datas = (int *)mlx_get_data_addr(datas->img.img, &(datas->img.bpp)
     , &(datas->img.size_line), &(datas->img.endian));
 }
@@ -22,52 +22,36 @@ void	render(t_struct *datas)
 	mlx_destroy_image(datas->img.ptr, datas->img.img);
 }
 
+void	init_basic_var(t_struct *datas)
+{
+	datas->game.m_h = 0;
+	datas->game.m_w = 0;
+	datas->game.flor_color = 0;
+	datas->game.num_spawn = 0;
+	datas->game.rof_color = 0;
+}
+
 int main(int argc, char **argv)
 {
     (void)argc;
     t_struct *datas;
 
-
     if (!(datas = (t_struct *)malloc(sizeof(t_struct))))
         return (0);
-	datas->game.m_h = 0;
-	datas->game.m_w = 0;
-	ft_read_file(argv[1], datas);
-		    int worldMap[mapWidth][mapHeight]=
-    {
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-    };
-
+	init_basic_var(datas);
+	if ((ft_read_file(argv[1], datas)) == -1)
+		return (-1);
+	if ((check_all(datas)) == -1)
+		return (-1);
     init_structure(datas);
 	//map_into_struct(datas, worldMap);
-	ft_get_texture(datas);
+	if ((ft_get_texture(datas)) == -1)
+		return (-1);
     init_raycasting_var(datas);
 	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);
 	mlx_hook(datas->img.win, 3, (1L << 1), keyunpress, datas);
 	ft_raycasting(datas);
+	mlx_loop_hook(datas->img.ptr, keyparsing, datas);
     mlx_loop(datas->img.ptr);
     return (0);
 }

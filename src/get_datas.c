@@ -44,7 +44,7 @@ int            ft_get_color(t_struct *datas, char *s)
         b = ft_atoi((const char **)&s);
         datas->game.flor_color = ft_dec_to_hexa(r, g, b);     
     }
-    if (*s == 'C')
+    else if (*s == 'C')
     {
         s++;
         r = ft_atoi((const char **)&s);
@@ -64,11 +64,8 @@ int            add_sprit_path(t_struct *datas, char *s)
     {
         s++;
         skip_char(&s, ' ');
-        printf("%s\n", s);
         datas->algo.s_name = ft_strdup(s); // <---- NEED TO FREE !!!!!
     }
-    else
-        return (6);
     return (0);
 }
 
@@ -80,8 +77,6 @@ int             add_reso(t_struct *datas, char *s)
         s++;
         datas->game.w_w = ft_atoi((const char **)&s);
         datas->game.w_h = ft_atoi((const char **)&s);
-        return (0);
     }
-    else
-        return (5);
+    return (0);
 }

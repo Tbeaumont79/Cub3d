@@ -30,7 +30,7 @@ void    init_algo_tex(t_struct *datas)
     }
 }
 
-void    ft_get_texture(t_struct *datas)
+int    ft_get_texture(t_struct *datas)
 {
     int i;
 
@@ -40,9 +40,10 @@ void    ft_get_texture(t_struct *datas)
         if (!(datas->tex[i].tex_img = 
         mlx_xpm_file_to_image(datas->img.ptr, datas->tex[i].name,
         &datas->tex[i].t_w, &datas->tex[i].t_h)))
-            ft_error("error texture !");
+            return (ft_error("error texture !\n"));
         datas->tex[i].datas = 
         (int *)mlx_get_data_addr(datas->tex[i].tex_img, &datas->tex[i].bpp,
         &datas->tex[i].size_line, &datas->tex[i].endian);
     }
+    return (0);
 }

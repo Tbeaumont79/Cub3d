@@ -143,14 +143,14 @@ void    draw_sky(t_struct *datas);
 void    draw_flor(t_struct *datas);
 void    draw(t_struct *datas);
 int     keypress(int keyval, void *param);
-int     keyparsing(int keyvalue, void *param);
+int     keyparsing(void *param);
 void    ft_raycasting(t_struct *datas);
-void    map_into_struct(t_struct *datas, char *s);
-int     move_up(t_struct *datas);
-int     move_down(t_struct *datas);
-int     move_right(t_struct *datas);
-int     move_left(t_struct *datas);
-int     quit(t_struct *datas);
+int     map_into_struct(t_struct *datas, char *s);
+void     move_up(t_struct *datas);
+void     move_down(t_struct *datas);
+void     move_right(t_struct *datas);
+void     move_left(t_struct *datas);
+void     quit(t_struct *datas);
 void    init_raycasting_var(t_struct *datas);
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void	render(t_struct *datas);
@@ -158,7 +158,7 @@ void    init_img(t_struct *datas);
 int     keyunpress(int keyval, void *param);
 void    choose_tex(t_struct *datas, int *color, int val);
 void    init_algo_tex(t_struct *datas);
-void    ft_get_texture(t_struct *datas);
+int    ft_get_texture(t_struct *datas);
 int     ft_error(char *s);
 void    ft_puterr(char *err, char *s);
 char	*gnl_strjoin(char const *s1, char *s2);
@@ -170,6 +170,7 @@ void    skip_char(char **s, int c);
 int     add_sprit_path(t_struct *datas, char *s);
 int     ft_get_color(t_struct *datas, char *s);
 int     ft_check_map(t_struct *datas, char *s);
+int     check_all(t_struct *datas);
 
 
 

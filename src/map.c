@@ -29,23 +29,27 @@ int     ft_check_map(t_struct *datas, char *s)
             datas->game.m_h++;
         i++;
     }
+    if (datas->game.m_h == 0 && datas->game.m_w == 0)
+        return (-1);
     return (0);
 }
 
-void    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la gestion d'erreur ! 
+int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la gestion d'erreur ! 
 {
     int i;
     int j;
 
-    ft_check_map(datas, s);
+    if ((ft_check_map(datas, s)) == -1)
+        ft_error("map is invalid");
     i = 0;
     if (!(datas->game.map = malloc(sizeof(int *) * datas->game.m_h)))
-        return ;
+        return (ft_error("malloc !\n"));
+
     while (i < datas->game.m_h)
     {
         j = 0;
         if (!(datas->game.map[i] = malloc(sizeof(int) * datas->game.m_w)))
-            return ;
+            return (ft_error("malloc !\n"));
         while (j < datas->game.m_w)
         {
             // check aussi le premier char de chaque ligne et le dernier
@@ -53,10 +57,13 @@ void    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la 
             {
                 if ((i == 0 && *s != '1') || (i + 1 == datas->game.m_h && *s != '1') ||
                 (*s != '1' && j + 1 == datas->game.m_w))
-                    return ;
+                    return (ft_error("map is not close ! \n"));
                 if (ft_is_dir(*s))
                 {
+                    datas->algo.posX = i + 0.5;
+                    datas->algo.posY = j + 0.5;
                     datas->game.spaw_dir = *s - '0';
+                    *s = '0';
                     datas->game.num_spawn += 1;
                 }
                 if (*s == '2')
@@ -66,7 +73,7 @@ void    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la 
             }
             s++;
         }
-
         i++;
     }
+    return (0);
 }

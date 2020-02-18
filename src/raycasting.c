@@ -1,15 +1,34 @@
 #include "../headers/cub3d.h"
 
+double    define_spawn_deg(t_struct *datas)
+{
+    double deg;
+
+    deg = datas->game.spaw_dir == 'N' ? M_PI_2 : 0;
+    deg = datas->game.spaw_dir == 'S' ? -M_PI_2 : 0;
+    deg = datas->game.spaw_dir == 'E' ? M_PI : 0;
+    deg = datas->game.spaw_dir == 'O' ? -M_PI : 0;
+    return (deg);
+}
+
 void    init_raycasting_var(t_struct *datas)
 {
-    datas->algo.posX = 1;
-    datas->algo.posY = 1;
+    int tmp_dirx;
+    int old_planex;
+    int deg;
+    deg = define_spawn_deg(datas);
     datas->algo.dirX = -1;
     datas->algo.dirY = 0;
+    tmp_dirx = datas->algo.dirX;
+    datas->algo.dirX = datas->algo.dirX * cos(deg) - datas->algo.dirY * sin(deg);
+    datas->algo.dirY = tmp_dirx * sin(deg) + datas->algo.dirY * cos(deg);
     datas->algo.planeX = 0;
     datas->algo.planeY = 0.66;
-    datas->algo.moveSpeed = 0.1;
-    datas->algo.rotSpeed = 0.1;
+    old_planex = datas->algo.planeX;
+    datas->algo.planeX = datas->algo.planeX * cos(deg) - datas->algo.planeY * sin(deg);
+    datas->algo.planeY = old_planex * sin(deg) + datas->algo.planeY * cos(deg);    
+    datas->algo.moveSpeed = 0.05;
+    datas->algo.rotSpeed = 0.05;
 }
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
@@ -101,8 +120,8 @@ void    ft_raycasting(t_struct *datas)
     int h;
     int w;
 
-    w = screenWidth;
-    h = screenHeight;
+    w = datas->game.w_w;
+    h = datas->game.w_h;
     datas->algo.x = -1;
     init_img(datas);
     while (++datas->algo.x < w)
