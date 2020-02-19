@@ -84,7 +84,7 @@ typedef struct       s_algo
 typedef struct      s_game
 {
     int key[key_len];
-    int spaw_dir;
+    char spaw_dir;
     int num_spawn;
     int **map;
     int wall;

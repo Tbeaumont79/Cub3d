@@ -4,26 +4,27 @@ double    define_spawn_deg(t_struct *datas)
 {
     double deg;
 
-    deg = datas->game.spaw_dir == 'N' ? M_PI_2 : 0;
-    deg = datas->game.spaw_dir == 'S' ? -M_PI_2 : 0;
-    deg = datas->game.spaw_dir == 'E' ? M_PI : 0;
-    deg = datas->game.spaw_dir == 'O' ? -M_PI : 0;
+    deg = datas->game.spaw_dir == 'O' ? M_PI_2 : 0;
+    deg = datas->game.spaw_dir == 'E' ? -(M_PI_2) : deg;
+    deg = datas->game.spaw_dir == 'N' ? 0 : deg;
+    deg = datas->game.spaw_dir == 'S' ? -(M_PI) : deg;
     return (deg);
 }
 
 void    init_raycasting_var(t_struct *datas)
 {
-    int tmp_dirx;
-    int old_planex;
-    int deg;
+    double tmp_dirx;
+    double old_planex;
+    double deg;
+
     deg = define_spawn_deg(datas);
     datas->algo.dirX = -1;
     datas->algo.dirY = 0;
+    datas->algo.planeX = 0;
+    datas->algo.planeY = 0.66;
     tmp_dirx = datas->algo.dirX;
     datas->algo.dirX = datas->algo.dirX * cos(deg) - datas->algo.dirY * sin(deg);
     datas->algo.dirY = tmp_dirx * sin(deg) + datas->algo.dirY * cos(deg);
-    datas->algo.planeX = 0;
-    datas->algo.planeY = 0.66;
     old_planex = datas->algo.planeX;
     datas->algo.planeX = datas->algo.planeX * cos(deg) - datas->algo.planeY * sin(deg);
     datas->algo.planeY = old_planex * sin(deg) + datas->algo.planeY * cos(deg);    

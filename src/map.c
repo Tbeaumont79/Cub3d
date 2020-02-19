@@ -7,7 +7,7 @@
 
 int     ft_is_dir(char c)
 {
-    return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+    return (c == 'N' || c == 'S' || c == 'E' || c == 'O');
 }
 
 int     ft_check_map(t_struct *datas, char *s)
@@ -62,7 +62,7 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
                 {
                     datas->algo.posX = i + 0.5;
                     datas->algo.posY = j + 0.5;
-                    datas->game.spaw_dir = *s - '0';
+                    datas->game.spaw_dir = *s;
                     *s = '0';
                     datas->game.num_spawn += 1;
                 }
