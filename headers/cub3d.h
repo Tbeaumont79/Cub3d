@@ -87,6 +87,9 @@ typedef struct      s_game
     char spaw_dir;
     int num_spawn;
     int **map;
+    int m_space;
+    int m_line;
+    int m_parsed;
     int wall;
     int num_sprit;
     unsigned long flor_color;
