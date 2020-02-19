@@ -14,7 +14,10 @@ int             add_tex_path(t_struct *datas, char *s, int i)
     j = 0;
     skip_char(&s, ' ');
     if (*s)
+    {
         datas->tex[i].name = ft_strdup(s); // <--- NEED TO FREE !!!!!!!!!
+        datas->game.m_parsed++;
+    }
     return (0);
 }
 
@@ -42,7 +45,8 @@ int            ft_get_color(t_struct *datas, char *s)
         g = ft_atoi((const char **)&s);
         skip_char(&s, ',');
         b = ft_atoi((const char **)&s);
-        datas->game.flor_color = ft_dec_to_hexa(r, g, b);     
+        datas->game.flor_color = ft_dec_to_hexa(r, g, b);
+        datas->game.m_parsed++;
     }
     else if (*s == 'C')
     {
@@ -52,7 +56,8 @@ int            ft_get_color(t_struct *datas, char *s)
         g = ft_atoi((const char **)&s);
         skip_char(&s, ',');
         b = ft_atoi((const char **)&s);
-        datas->game.rof_color = ft_dec_to_hexa(r, g, b);     
+        datas->game.rof_color = ft_dec_to_hexa(r, g, b);
+        datas->game.m_parsed++;
     }
     return (0);
 }
@@ -65,6 +70,7 @@ int            add_sprit_path(t_struct *datas, char *s)
         s++;
         skip_char(&s, ' ');
         datas->algo.s_name = ft_strdup(s); // <---- NEED TO FREE !!!!!
+        datas->game.m_parsed++;
     }
     return (0);
 }
@@ -77,6 +83,7 @@ int             add_reso(t_struct *datas, char *s)
         s++;
         datas->game.w_w = ft_atoi((const char **)&s);
         datas->game.w_h = ft_atoi((const char **)&s);
+        datas->game.m_parsed++;
     }
     return (0);
 }

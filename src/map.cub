@@ -1,11 +1,15 @@
 R 1000 1000
+
 NO ../textures/colorstone.xpm
 SO ../textures/mossy.xpm
 WE ../textures/eagle.xpm
 EA ../textures/wood.xpm
 S ../textures/barrel.xpm
-F 191,93,44
-C 46,8,102                       
+X ../textures/greenlight.xpm
+
+F 205,133,63
+C 60,60,60  
+
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 1 0 1 1 0 0 0 0 0 1 1 1 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 1

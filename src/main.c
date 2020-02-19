@@ -30,6 +30,9 @@ void	init_basic_var(t_struct *datas)
 	datas->game.flor_color = 0;
 	datas->game.num_spawn = 0;
 	datas->game.rof_color = 0;
+    datas->game.m_parsed = 0;
+	datas->game.m_line = 0;
+	datas->game.m_space = 0;
 }
 
 int main(int argc, char **argv)
@@ -48,8 +51,8 @@ int main(int argc, char **argv)
     init_raycasting_var(datas);
 	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);
 	mlx_hook(datas->img.win, 3, (1L << 1), keyunpress, datas);
-	ft_raycasting(datas);
 	mlx_loop_hook(datas->img.ptr, keyparsing, datas);
+	ft_raycasting(datas);
     mlx_loop(datas->img.ptr);
     return (0);
 }

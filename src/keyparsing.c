@@ -7,12 +7,12 @@ int    keypress(int keyval, void *param)
     t_struct *datas;
 
     datas = (t_struct *)param;
-    datas->game.key[key_up] = keyval == 13 ? keyval : 0;
-    datas->game.key[key_down] = keyval == 1 ? keyval : 0;
-    datas->game.key[key_right] = keyval == 2 ? keyval : 0;
-    datas->game.key[key_left] = keyval == 0 ? 1 : 0;
-    datas->game.key[rot_left] = keyval == 123 ? keyval : 0;
-    datas->game.key[rot_right] = keyval == 124 ? keyval : 0;
+    datas->game.key[key_up] = keyval == 13 ? keyval : datas->game.key[key_up];
+    datas->game.key[key_down] = keyval == 1 ? keyval : datas->game.key[key_down];
+    datas->game.key[key_right] = keyval == 2 ? keyval : datas->game.key[key_right];
+    datas->game.key[key_left] = keyval == 0 ? 1 : datas->game.key[key_left];
+    datas->game.key[rot_left] = keyval == 123 ? keyval : datas->game.key[rot_left];
+    datas->game.key[rot_right] = keyval == 124 ? keyval : datas->game.key[rot_right];
     datas->game.key[key_escape] = keyval == 53 ? keyval : 0;
     return (0);
 }
@@ -22,12 +22,12 @@ int     keyunpress(int keyval, void *param)
     t_struct *datas;
 
     datas = (t_struct *)param;
-    datas->game.key[key_up] = keyval == 13 ? 0 : 0;
-    datas->game.key[key_down] = keyval == 1 ? 0 : 0;
-    datas->game.key[key_right] = keyval == 2 ? 0 : 0;
+    datas->game.key[key_up] = keyval == 13 ? 0 : datas->game.key[key_up];
+    datas->game.key[key_down] = keyval == 1 ? 0 : datas->game.key[key_down];
+    datas->game.key[key_right] = keyval == 2 ? 0 : datas->game.key[key_right];
     datas->game.key[key_left] = 1 == 0 ? 0 : 0;
-    datas->game.key[rot_left] = keyval == 123 ? 0 : 0;
-    datas->game.key[rot_right] = keyval == 124 ? 0 : 0;
+    datas->game.key[rot_left] = keyval == 123 ? 0 : datas->game.key[rot_left];
+    datas->game.key[rot_right] = keyval == 124 ? 0 : datas->game.key[rot_right];
     datas->game.key[key_escape] = keyval == 53 ? 0 : 0;
     return (0);
 }

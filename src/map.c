@@ -29,7 +29,8 @@ int     ft_check_map(t_struct *datas, char *s)
             datas->game.m_h++;
         i++;
     }
-    if (datas->game.m_h == 0 && datas->game.m_w == 0)
+    if ((datas->game.m_h == 0 && datas->game.m_w == 0) ||
+    (datas->game.m_space + 1 != datas->game.m_line))
         return (-1);
     return (0);
 }
@@ -40,7 +41,7 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
     int j;
 
     if ((ft_check_map(datas, s)) == -1)
-        ft_error("map is invalid");
+        return (ft_error("map is invalid"));
     i = 0;
     if (!(datas->game.map = malloc(sizeof(int *) * datas->game.m_h)))
         return (ft_error("malloc !\n"));
@@ -67,7 +68,7 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
                     datas->game.num_spawn += 1;
                 }
                 if (*s == '2')
-                    datas->game.num_sprit += 1; // potentiellement lui define ca posx et sa poseY a confirme   
+                    datas->game.num_sprit += 1;
                 datas->game.map[i][j] = *s - '0';
                 j++;
             }

@@ -40,7 +40,6 @@ void    display_sprit(t_struct *datas, int i)
     datas->algo.trans_y < datas->algo.zbuff[datas->algo.strip])
     {
         y = datas->algo.dstart_y;
-
         while (y < datas->algo.dend_y)
         {
             val = ((y * 256) - (datas->game.w_h * 128) + (datas->algo.s_h * 128));

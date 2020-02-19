@@ -13,10 +13,10 @@ void    draw_sky(t_struct *datas)
 void    draw_flor(t_struct *datas)
 {
     int y;
-    
+
     y = datas->game.w_h / 2;
     while (++y < datas->game.w_h)
-        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = datas->game.flor_color;  
+        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = datas->game.flor_color;
 }
 
 void    draw_wall(t_struct *datas)
@@ -24,13 +24,19 @@ void    draw_wall(t_struct *datas)
     int y;
     int val;
     int color;
+    int z;
 
+    z = 1;
+    if (datas->algo.perpWallDist > 5)
+     z = 2;
+    if (datas->algo.perpWallDist > 20)
+     z = 4;
     y = datas->algo.drawStart;
     while (y <= datas->algo.drawEnd)
     {
         val = y * 256 - datas->game.w_h * 128 + datas->algo.lineHeight * 128;
         choose_tex(datas, &color, val);
-        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = color;
+        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = color / z;
         y++;
     }
 }

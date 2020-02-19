@@ -22,7 +22,6 @@ int     ft_parse_text(char *s, t_struct *datas)
 
 int     ft_parse(char *s, t_struct *datas)
 {
-
     add_reso(datas, s);
     ft_parse_text(s, datas);
     add_sprit_path(datas, s);
@@ -45,11 +44,16 @@ int     ft_parse(char *s, t_struct *datas)
         ft_error("not a valid file");
     while ((ret = get_next_line(fd, &line)) >= 0)
     {
+        if (datas->game.m_line)
+            datas->game.m_space++;
         ft_parse(line, datas);
         if (*line == '1')
         {
+            if (datas->game.m_parsed < 5)
+                return (ft_error("map not at the end of file !"));
             s = gnl_strjoin(s, line); // pensez a free et evitez les pertes d'address !
             s = gnl_strjoin(s, "\n");
+            datas->game.m_line++;
         }
         free(line);
         if (ret == 0)
