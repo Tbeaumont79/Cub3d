@@ -18,6 +18,7 @@ void init_img(t_struct *datas)
 
 void	render(t_struct *datas)
 {
+	free(datas->algo.zbuff);
     mlx_put_image_to_window(datas->img.ptr, datas->img.win, datas->img.img, 0, 0);
 	mlx_destroy_image(datas->img.ptr, datas->img.img);
 }
@@ -41,10 +42,7 @@ int main(int argc, char **argv)
 	init_basic_var(datas);
 	if ((ft_read_file(argv[1], datas)) == -1)
 		return (-1);
-	if ((check_all(datas)) == -1)
-		return (-1);
     init_structure(datas);
-	//map_into_struct(datas, worldMap);
 	if ((ft_get_texture(datas)) == -1)
 		return (-1);
     init_raycasting_var(datas);

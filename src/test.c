@@ -27,6 +27,7 @@ int key_press(int key_value, void *param)
 {
     if (key_value == 53)
         exit(EXIT_SUCCESS);
+    ft_putnbr(key_value);
     return (key_value);
 }
 

@@ -1,11 +1,9 @@
 #ifndef __CUB3D__H
 # define __CUB3D__H
 
-# define screenWidth 1000
-# define screenHeight 1000
 # define mapWidth 24
 # define mapHeight 24
-# define key_len 6
+# define key_len 8
 # define texWidth 64
 # define texHeight 64
 # define BUFFER_SIZE 32
@@ -22,8 +20,9 @@ typedef enum s_value
     key_down,
     key_right,
     key_left,
+    rot_left,
+    rot_right,
     key_escape,
-    key_red,
 }            t_value;
 
 typedef struct       s_algo
@@ -40,7 +39,7 @@ typedef struct       s_algo
     double cameraX;
     double rayDirX;
     double rayDirY;
-    double zbuff[screenWidth];
+    double *zbuff;
     int mapX;
     int mapY;
     int **map;
@@ -68,6 +67,7 @@ typedef struct       s_algo
     double s_y;
     double invet;
     double trans_x;
+    double trans_y;
     int screenx;
     int s_h;
     int s_w;
@@ -77,6 +77,7 @@ typedef struct       s_algo
     int dstart_y;
     int sprit_tex_y;
     int sprit_tex_x;
+    int strip;
     char *s_name;
 }                   t_algo;
 
@@ -111,8 +112,15 @@ typedef struct      s_tex
 
 typedef struct      s_sprit
 {
-    int *sprite_order;
-    int *sprite_distance;
+    int sprite_order;
+    int sprite_distance;
+    int *datas;
+    void *img;
+    int size_line;
+    int bpp;
+    int endian;
+    int h;
+    int w;
     int posx;
     int posy;
 }                   t_sprit;
@@ -144,7 +152,7 @@ void    draw_flor(t_struct *datas);
 void    draw(t_struct *datas);
 int     keypress(int keyval, void *param);
 int     keyparsing(void *param);
-void    ft_raycasting(t_struct *datas);
+int    ft_raycasting(t_struct *datas);
 int     map_into_struct(t_struct *datas, char *s);
 void     move_up(t_struct *datas);
 void     move_down(t_struct *datas);
@@ -171,6 +179,12 @@ int     add_sprit_path(t_struct *datas, char *s);
 int     ft_get_color(t_struct *datas, char *s);
 int     ft_check_map(t_struct *datas, char *s);
 int     check_all(t_struct *datas);
+void    get_sprit_pos(t_struct *datas);
+int     sorted_sprite(t_struct *datas);
+int     handle_sprit(t_struct *datas);
+void    rotate_right(t_struct *datas);
+void    rotate_left(t_struct *datas);
+
 
 
 

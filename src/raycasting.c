@@ -90,7 +90,7 @@ void    check_hit(t_struct *datas)
             datas->algo.sideDistY += datas->algo.deltaDistY;
             datas->algo.mapY += datas->algo.stepY;
         }
-        if (datas->game.map[datas->algo.mapX][datas->algo.mapY] > 0)
+        if (datas->game.map[datas->algo.mapX][datas->algo.mapY] == 1)
             datas->algo.hit = 1;
     }
 }
@@ -115,7 +115,7 @@ void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
         datas->algo.wallX -= floor((datas->algo.wallX));
 }
 
-void    ft_raycasting(t_struct *datas)
+int    ft_raycasting(t_struct *datas)
 {
     int h;
     int w;
@@ -123,6 +123,8 @@ void    ft_raycasting(t_struct *datas)
     w = datas->game.w_w;
     h = datas->game.w_h;
     datas->algo.x = -1;
+    if (!(datas->algo.zbuff = malloc(sizeof(double) * datas->game.w_w)))
+        return (ft_error("malloc !\n"));
     init_img(datas);
     while (++datas->algo.x < w)
     {
@@ -131,6 +133,11 @@ void    ft_raycasting(t_struct *datas)
         check_hit(datas);
         init_calcul_for_draw_wall(datas, w, h);
         draw(datas);
+        datas->algo.zbuff[datas->algo.x] = datas->algo.perpWallDist;
     }
+    if (datas->game.num_sprit > 0)
+        if ((handle_sprit(datas)) == -1)
+            return (ft_error("sprit !"));
     render(datas);
+    return (0);
 }
