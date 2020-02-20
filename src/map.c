@@ -35,7 +35,7 @@ int     ft_check_map(t_struct *datas, char *s)
     return (0);
 }
 
-int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la gestion d'erreur ! 
+int    map_into_struct(t_struct *datas, char *s)
 {
     int i;
     int j;
@@ -45,7 +45,6 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
     i = 0;
     if (!(datas->game.map = malloc(sizeof(int *) * datas->game.m_h)))
         return (ft_error("malloc !\n"));
-
     while (i < datas->game.m_h)
     {
         j = 0;
@@ -53,7 +52,6 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
             return (ft_error("malloc !\n"));
         while (j < datas->game.m_w)
         {
-            // check aussi le premier char de chaque ligne et le dernier
             if (ft_isdigit(*s) || ft_is_dir(*s))
             {
                 if ((i == 0 && *s != '1') || (i + 1 == datas->game.m_h && *s != '1') ||

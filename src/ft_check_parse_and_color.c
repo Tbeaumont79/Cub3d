@@ -6,7 +6,8 @@ int check_all(t_struct *datas)
         return (ft_error("there is no spawn on the map !\n"));
     if (datas->game.num_spawn > 1)
         return (ft_error("there is too much spawn !\n"));
-    if (datas->game.num_sprit > 0 && datas->algo.s_name == NULL)
+    if ((datas->game.num_sprit > 0 && datas->game.sprit_tex == NULL)
+    || (datas->game.sprit_light > 0 && datas->game.sprit_tex2 == NULL))
         return (ft_error("invalide sprit path !\n"));
     if (datas->game.flor_color == 0)
         return (ft_error("the flor has no color set !\n"));

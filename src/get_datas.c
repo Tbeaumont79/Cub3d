@@ -7,20 +7,6 @@ void      skip_char(char **s, int c)
         (*s)++;
 }
 
-int             add_tex_path(t_struct *datas, char *s, int i)
-{
-    int j;
-
-    j = 0;
-    skip_char(&s, ' ');
-    if (*s)
-    {
-        datas->tex[i].name = ft_strdup(s); // <--- NEED TO FREE !!!!!!!!!
-        datas->game.m_parsed++;
-    }
-    return (0);
-}
-
 unsigned long ft_dec_to_hexa(int r, int g, int b)
 {
     return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
@@ -64,7 +50,6 @@ int            ft_get_color(t_struct *datas, char *s)
 int            add_sprit_path(t_struct *datas, char *s)
 {
     skip_char(&s, ' ');
-
     if (*s == 'X')
     {
         s++;

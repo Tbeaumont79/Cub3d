@@ -34,6 +34,7 @@ void	init_basic_var(t_struct *datas)
     datas->game.m_parsed = 0;
 	datas->game.m_line = 0;
 	datas->game.m_space = 0;
+	datas->game.num_tex = 0;
 }
 
 int main(int argc, char **argv)
@@ -47,6 +48,8 @@ int main(int argc, char **argv)
 	if ((ft_read_file(argv[1], datas)) == -1)
 		return (-1);
     init_structure(datas);
+	if ((check_all(datas) == -1))
+		return (-1);
 	if ((ft_get_texture(datas)) == -1)
 		return (-1);
     init_raycasting_var(datas);

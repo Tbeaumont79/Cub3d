@@ -8,16 +8,16 @@
 
 int     ft_parse_text(char *s, t_struct *datas)
 {
-    static char tex[4][3] = {{"NO"}, {"SO"}, {"WE"}, {"EA"}};
+    static char tex[5][3] = {{"NO"}, {"SO"}, {"WE"}, {"EA"}, {"FO"}};
     int         i;
 
     i = -1;
-    while (++i < 4)
+    while (++i < 5)
         if (ft_strstr(s, tex[i]))
             break ;
     if (*s == tex[i][0])
         s += ft_strlen(tex[i]);
-    return (i >= 0 && i < 4 ? add_tex_path(datas, s, i) : 4);
+    return (i >= 0 && i < 5 ? add_tex_path(datas, s, i) : 4);
 }
 
 int     ft_parse(char *s, t_struct *datas)
@@ -35,6 +35,8 @@ int     ft_parse(char *s, t_struct *datas)
      char   *line;
      char   *s;
      int    ret;
+     char   *tmp;
+     char   *tmp2;
 
     s = NULL;
     ret = 0;
@@ -51,8 +53,12 @@ int     ft_parse(char *s, t_struct *datas)
         {
             if (datas->game.m_parsed < 5)
                 return (ft_error("map not at the end of file !"));
-            s = gnl_strjoin(s, line); // pensez a free et evitez les pertes d'address !
-            s = gnl_strjoin(s, "\n");
+            tmp = gnl_strjoin(s, line); // pensez a free et evitez les pertes d'address !
+            free(s);
+            s = tmp;
+            tmp2 = gnl_strjoin(s, "\n");
+            free(s);
+            s = tmp2;
             datas->game.m_line++;
         }
         free(line);
@@ -61,5 +67,6 @@ int     ft_parse(char *s, t_struct *datas)
     }
     if ((map_into_struct(datas, s)) == -1)
         return (-1);
+    free(s);
     return (0);
  }

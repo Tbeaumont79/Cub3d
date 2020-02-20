@@ -13,10 +13,18 @@ void    draw_sky(t_struct *datas)
 void    draw_flor(t_struct *datas)
 {
     int y;
-
-    y = datas->game.w_h / 2;
-    while (++y < datas->game.w_h)
-        datas->img.datas[(y * datas->game.w_w) + datas->algo.x] = datas->game.flor_color;
+    
+    if (datas->game.num_tex == 5)
+    {
+        if (datas->tex[4].name[0] != '\0')
+            draw_flor_text(datas);
+    }
+    else
+    {
+        y = (datas->game.w_h / 2) - 1;
+        while (++y < datas->game.w_h)
+            datas->img.datas[(datas->game.w_w * y) + datas->algo.x] = datas->game.flor_color;
+    }
 }
 
 void    draw_wall(t_struct *datas)

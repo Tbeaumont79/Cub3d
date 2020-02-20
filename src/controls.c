@@ -2,6 +2,9 @@
 #include "mlx.h"
 void    quit(t_struct *datas)
 {
+	//ft_free(datas);
+
+	system("leaks a.out");
     (void)datas;
     exit(1);
 }
