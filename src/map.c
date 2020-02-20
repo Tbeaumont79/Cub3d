@@ -69,6 +69,8 @@ int    map_into_struct(t_struct *datas, char *s) //  <-- return un int pour la g
                 }
                 if (*s == '2')
                     datas->game.num_sprit += 1;
+                if (*s == '3')
+                    datas->game.sprit_light += 1;
                 datas->game.map[i][j] = *s - '0';
                 j++;
             }

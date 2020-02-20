@@ -20,8 +20,12 @@ void    get_sprit_pos(t_struct *datas)
     {
         j = -1;
         while (++j < datas->game.m_w)
+        {
             if (datas->game.map[i][j] == 2)
                 num = add_sprit_pos(datas, i, j, num);
+            else if (datas->game.map[i][j] == 3)
+                num = add_sprit_pos(datas, i, j, num);
+        }
     }
 }
 

@@ -31,7 +31,6 @@ int            ft_get_color(t_struct *datas, char *s)
     int r;
     int g;
     int b;
-    unsigned long hexa_num;
 
     r = 0;
     g = 0;  
@@ -65,11 +64,20 @@ int            ft_get_color(t_struct *datas, char *s)
 int            add_sprit_path(t_struct *datas, char *s)
 {
     skip_char(&s, ' ');
+
+    if (*s == 'X')
+    {
+        s++;
+        skip_char(&s, ' ');
+        datas->game.sprit_tex2 = ft_strdup(s);
+        datas->game.m_parsed++;
+
+    }
     if (*s == 'S' && *(s + 1) != 'O')
     {
         s++;
         skip_char(&s, ' ');
-        datas->algo.s_name = ft_strdup(s); // <---- NEED TO FREE !!!!!
+        datas->game.sprit_tex = ft_strdup(s); // <---- NEED TO FREE !!!!!
         datas->game.m_parsed++;
     }
     return (0);

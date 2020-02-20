@@ -57,14 +57,27 @@ void    display_sprit(t_struct *datas, int i)
 int     get_sprite(t_struct *datas)
 {
     int j;
+    int size;
 
+    size = datas->game.num_sprit == 0 && datas->game.sprit_light > 0 ?
+    datas->game.sprit_light : 0;
+    size = datas->game.num_sprit > 0 && datas->game.sprit_light == 0 ?
+    datas->game.num_sprit : size;
+    size = datas->game.num_sprit >= 0 && datas->game.sprit_light >= 0 ?
+    datas->game.num_sprit + datas->game.sprit_light : size;
     if (!(datas->sprit = (t_sprit *)malloc(sizeof(t_sprit)
-    * datas->game.num_sprit)))
-     return (ft_error("malloc !\n"));
+        * size)))
+        return (ft_error("malloc !\n"));
     get_sprit_pos(datas);
     j = 0;
-    while (j < datas->game.num_sprit)
+    while (j < size)
     {
+        if (datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] == 2
+        && datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] != 3)
+            datas->algo.s_name = datas->game.sprit_tex;
+        if (datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] == 3
+        && datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] != 2)
+            datas->algo.s_name = datas->game.sprit_tex2;
         if (!(datas->sprit[j].img =
         mlx_xpm_file_to_image(datas->img.ptr, datas->algo.s_name, &datas->sprit[j].w,
         &datas->sprit[j].h)))
@@ -78,18 +91,20 @@ int     get_sprite(t_struct *datas)
         * (datas->algo.posY - datas->sprit[j].posy));
         j++;
     }
-    return (0);
+    return (datas->game.sprit_light > 0 ? datas->game.sprit_light : 0);
 }
 
 int     handle_sprit(t_struct *datas)
 {
     int i;
+    int val;
 
-    if ((get_sprite(datas)) == -1)
+    val = 0;
+    if ((val = get_sprite(datas)) == -1)
         return (ft_error("can't get sprit ! \n"));
     sorted_sprite(datas);
     i = -1;
-    while (++i < datas->game.num_sprit)
+    while (++i < datas->game.num_sprit + val)
     {
         init_sprit(datas, i);
         datas->algo.strip = datas->algo.dstart_x;

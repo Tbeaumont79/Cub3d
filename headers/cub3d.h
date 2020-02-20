@@ -97,6 +97,10 @@ typedef struct      s_game
     int m_h;
     int m_w;
     int w_h;
+    char *sprit_tex;
+    char *sprit_tex2;
+    int sprit_light;
+    int check_sprit;
     int w_w;
 }                   t_game;
 

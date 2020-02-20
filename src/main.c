@@ -29,6 +29,7 @@ void	init_basic_var(t_struct *datas)
 	datas->game.m_w = 0;
 	datas->game.flor_color = 0;
 	datas->game.num_spawn = 0;
+	datas->game.sprit_light = 0;
 	datas->game.rof_color = 0;
     datas->game.m_parsed = 0;
 	datas->game.m_line = 0;

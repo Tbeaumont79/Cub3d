@@ -1,5 +1,5 @@
 #include "../headers/cub3d.h"
-
+#include "../Libft/libft.h"
 double    define_spawn_deg(t_struct *datas)
 {
     double deg;
@@ -123,6 +123,7 @@ int    ft_raycasting(t_struct *datas)
 
     w = datas->game.w_w;
     h = datas->game.w_h;
+    datas->game.check_sprit = 0;
     datas->algo.x = -1;
     if (!(datas->algo.zbuff = malloc(sizeof(double) * datas->game.w_w)))
         return (ft_error("malloc !\n"));
