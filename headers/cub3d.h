@@ -1,8 +1,6 @@
 #ifndef __CUB3D__H
 # define __CUB3D__H
 
-# define mapWidth 24
-# define mapHeight 24
 # define key_len 8
 # define texWidth 64
 # define texHeight 64
@@ -27,6 +25,16 @@ typedef enum s_value
 
 typedef struct       s_algo
 {
+    double floorxwall;
+    double floorywall;
+    double distwall;
+    double distplayer;
+    double currentdist;
+    double weight;
+    double currentfloorx;
+    double currentfloory;
+    int    floortexx;
+    int    floortexy;
     double posX;
     double posY;
     double dirX;
@@ -92,6 +100,7 @@ typedef struct      s_game
     int m_parsed;
     int wall;
     int num_sprit;
+    int num_tex;
     unsigned long flor_color;
     unsigned long rof_color;
     int m_h;
@@ -151,7 +160,7 @@ typedef struct      s_struct
     t_algo  algo;
     t_game  game;
     t_sprit *sprit;
-    t_tex   tex[4];
+    t_tex   tex[5];
 }                   t_struct;
 
 void    draw_sky(t_struct *datas);
@@ -191,6 +200,9 @@ int     sorted_sprite(t_struct *datas);
 int     handle_sprit(t_struct *datas);
 void    rotate_right(t_struct *datas);
 void    rotate_left(t_struct *datas);
+void    draw_flor(t_struct *datas);
+void    draw_flor_text(t_struct *datas);
+void    ft_free(t_struct *datas);
 
 
 
