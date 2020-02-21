@@ -207,6 +207,7 @@ void    draw_flor(t_struct *datas);
 void    draw_flor_text(t_struct *datas);
 void    ft_free(t_struct *datas);
 int     exite(int key, void *datas);
+int     ft_screenshot(t_struct *datas);
 
 
 

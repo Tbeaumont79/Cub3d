@@ -12,6 +12,7 @@
 
 #include "../headers/cub3d.h"
 #include "mlx.h"
+#include "../Libft/libft.h"
 
 void	init_structure(t_struct *datas)
 {
@@ -67,6 +68,9 @@ int		main(int argc, char **argv)
 	if ((ft_get_texture(datas)) == -1)
 		return (-1);
 	init_raycasting_var(datas);
+	if (argc - 1 == 2)
+		if (ft_strstr(argv[2], "--save"))
+			ft_screenshot(datas);
 	mlx_hook(datas->img.win, 17, 0L, exite, datas);
 	mlx_hook(datas->img.win, 2, (1L << 0), keypress, datas);
 	mlx_hook(datas->img.win, 3, (1L << 1), keyunpress, datas);
