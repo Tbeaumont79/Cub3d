@@ -2,8 +2,6 @@
 # define __CUB3D__H
 
 # define key_len 8
-# define texWidth 64
-# define texHeight 64
 # define BUFFER_SIZE 32
 
 #include <stdio.h>
@@ -35,41 +33,42 @@ typedef struct       s_algo
     double currentfloory;
     int    floortexx;
     int    floortexy;
-    double posX;
-    double posY;
-    double dirX;
-    double dirY;
-    double planeX;
-    double planeY;
-    double wallX;
-    double moveSpeed;
-    double rotSpeed;
-    double cameraX;
-    double rayDirX;
-    double rayDirY;
+    int    ret;
+    double posx;
+    double posy;
+    double dirx;
+    double diry;
+    double planex;
+    double planey;
+    double wallx;
+    double movespeed;
+    double rotspeed;
+    double camerax;
+    double raydirx;
+    double raydiry;
     double *zbuff;
-    int mapX;
-    int mapY;
+    int mapx;
+    int mapy;
     int **map;
-    double sideDistX;
-    double sideDistY;
-    double deltaDistX;
-    double deltaDistY;
-	double perpWallDist;
-    int stepX;
-    int stepY;
+    double sidedistx;
+    double sidedisty;
+    double deltadistx;
+    double deltadisty;
+	double perpwalldist;
+    int stepx;
+    int stepy;
     int hit;
     int side;
-    int lineHeight;
-    int drawStart;
-    int drawEnd;
-    double oldDirX;
-    double oldPlaneX;
+    int lineheight;
+    int drawstart;
+    int drawend;
+    double oldirx;
+    double oldplanex;
     int x;
-    int texX[4];
-    int texY[4];
-    int texNum;
-    double texPos;
+    int texx[4];
+    int texy[4];
+    int tex_num;
+    double texpos;
     double step;
     double s_x;
     double s_y;
@@ -87,6 +86,9 @@ typedef struct       s_algo
     int sprit_tex_x;
     int strip;
     char *s_name;
+    char *s;
+    char *tmp;
+    char *tmp2;
 }                   t_algo;
 
 typedef struct      s_game
@@ -168,13 +170,13 @@ void    draw_flor(t_struct *datas);
 void    draw(t_struct *datas);
 int     keypress(int keyval, void *param);
 int     keyparsing(void *param);
-int    ft_raycasting(t_struct *datas);
+int     ft_raycasting(t_struct *datas);
 int     map_into_struct(t_struct *datas, char *s);
-void     move_up(t_struct *datas);
-void     move_down(t_struct *datas);
-void     move_right(t_struct *datas);
-void     move_left(t_struct *datas);
-void     quit(t_struct *datas);
+void    move_up(t_struct *datas);
+void    move_down(t_struct *datas);
+void    move_right(t_struct *datas);
+void    move_left(t_struct *datas);
+void    quit(t_struct *datas);
 void    init_raycasting_var(t_struct *datas);
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void	render(t_struct *datas);
@@ -182,7 +184,7 @@ void    init_img(t_struct *datas);
 int     keyunpress(int keyval, void *param);
 void    choose_tex(t_struct *datas, int *color, int val);
 void    init_algo_tex(t_struct *datas);
-int    ft_get_texture(t_struct *datas);
+int     ft_get_texture(t_struct *datas);
 int     ft_error(char *s);
 void    ft_puterr(char *err, char *s);
 char	*gnl_strjoin(char const *s1, char *s2);
@@ -193,6 +195,7 @@ int     add_tex_path(t_struct *datas, char *s, int i);
 void    skip_char(char **s, int c);
 int     add_sprit_path(t_struct *datas, char *s);
 int     ft_get_color(t_struct *datas, char *s);
+int     ft_fill_s(t_struct *datas, char *str);
 int     ft_check_map(t_struct *datas, char *s);
 int     check_all(t_struct *datas);
 void    get_sprit_pos(t_struct *datas);
@@ -203,6 +206,7 @@ void    rotate_left(t_struct *datas);
 void    draw_flor(t_struct *datas);
 void    draw_flor_text(t_struct *datas);
 void    ft_free(t_struct *datas);
+int     exite(int key, void *datas);
 
 
 

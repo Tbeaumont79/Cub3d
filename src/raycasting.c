@@ -18,60 +18,60 @@ void    init_raycasting_var(t_struct *datas)
     double deg;
 
     deg = define_spawn_deg(datas);
-    datas->algo.dirX = -1;
-    datas->algo.dirY = 0;
-    datas->algo.planeX = 0;
-    datas->algo.planeY = 0.66;
-    tmp_dirx = datas->algo.dirX;
-    datas->algo.dirX = datas->algo.dirX * cos(deg) - datas->algo.dirY * sin(deg);
-    datas->algo.dirY = tmp_dirx * sin(deg) + datas->algo.dirY * cos(deg);
-    old_planex = datas->algo.planeX;
-    datas->algo.planeX = datas->algo.planeX * cos(deg) - datas->algo.planeY * sin(deg);
-    datas->algo.planeY = old_planex * sin(deg) + datas->algo.planeY * cos(deg);    
-    datas->algo.moveSpeed = 0.05;
-    datas->algo.rotSpeed = 0.05;
+    datas->algo.dirx = -1;
+    datas->algo.diry = 0;
+    datas->algo.planex = 0;
+    datas->algo.planey = 0.66;
+    tmp_dirx = datas->algo.dirx;
+    datas->algo.dirx = datas->algo.dirx * cos(deg) - datas->algo.diry * sin(deg);
+    datas->algo.diry = tmp_dirx * sin(deg) + datas->algo.diry * cos(deg);
+    old_planex = datas->algo.planex;
+    datas->algo.planex = datas->algo.planex * cos(deg) - datas->algo.planey * sin(deg);
+    datas->algo.planey = old_planex * sin(deg) + datas->algo.planey * cos(deg);    
+    datas->algo.movespeed = 0.05;
+    datas->algo.rotspeed = 0.05;
 }
 
 void    init_raycasting_var_in_loop(t_struct *datas, int w, int h)
 {
     (void)h;
-    datas->algo.cameraX = 2 * datas->algo.x / (double)w - 1;
-    datas->algo.rayDirX =
-    datas->algo.dirX + datas->algo.planeX * datas->algo.cameraX;
-    datas->algo.rayDirY =
-    datas->algo.dirY + datas->algo.planeY * datas->algo.cameraX;
-    datas->algo.mapX = (int)datas->algo.posX;
-    datas->algo.mapY = (int)datas->algo.posY;
-    datas->algo.deltaDistX = (double)fabs(1 / datas->algo.rayDirX);
-    datas->algo.deltaDistY = (double)fabs(1 / datas->algo.rayDirY);
+    datas->algo.camerax = 2 * datas->algo.x / (double)w - 1;
+    datas->algo.raydirx =
+    datas->algo.dirx + datas->algo.planex * datas->algo.camerax;
+    datas->algo.raydiry =
+    datas->algo.diry + datas->algo.planey * datas->algo.camerax;
+    datas->algo.mapx = (int)datas->algo.posx;
+    datas->algo.mapy = (int)datas->algo.posy;
+    datas->algo.deltadistx = (double)fabs(1 / datas->algo.raydirx);
+    datas->algo.deltadisty = (double)fabs(1 / datas->algo.raydiry);
     datas->algo.hit = 0;
 }
 
 void    check_raycasting(t_struct *datas)
 {
-    if (datas->algo.rayDirX < 0)
+    if (datas->algo.raydirx < 0)
         {
-            datas->algo.stepX = -1;
-            datas->algo.sideDistX = 
-            (datas->algo.posX - datas->algo.mapX) * datas->algo.deltaDistX;
+            datas->algo.stepx = -1;
+            datas->algo.sidedistx = 
+            (datas->algo.posx - datas->algo.mapx) * datas->algo.deltadistx;
         }
         else
         {
-            datas->algo.stepX = 1;
-            datas->algo.sideDistX =
-            (datas->algo.mapX + 1.0 - datas->algo.posX) * datas->algo.deltaDistX;                
+            datas->algo.stepx = 1;
+            datas->algo.sidedistx =
+            (datas->algo.mapx + 1.0 - datas->algo.posx) * datas->algo.deltadistx;                
         }
-        if (datas->algo.rayDirY < 0)
+        if (datas->algo.raydiry < 0)
         {
-            datas->algo.stepY = -1;
-            datas->algo.sideDistY =
-            (datas->algo.posY - datas->algo.mapY) * datas->algo.deltaDistY;
+            datas->algo.stepy = -1;
+            datas->algo.sidedisty =
+            (datas->algo.posy - datas->algo.mapy) * datas->algo.deltadisty;
         }
         else
         {
-            datas->algo.stepY = 1;
-            datas->algo.sideDistY =
-            (datas->algo.mapY + 1.0 - datas->algo.posY) * datas->algo.deltaDistY;
+            datas->algo.stepy = 1;
+            datas->algo.sidedisty =
+            (datas->algo.mapy + 1.0 - datas->algo.posy) * datas->algo.deltadisty;
         }
 }
 
@@ -79,19 +79,19 @@ void    check_hit(t_struct *datas)
 {
     while (datas->algo.hit == 0)
     {
-        if (datas->algo.sideDistX < datas->algo.sideDistY)
+        if (datas->algo.sidedistx < datas->algo.sidedisty)
         {
-            datas->algo.side = datas->algo.rayDirX < 0 ? 0 : 1;
-            datas->algo.sideDistX += datas->algo.deltaDistX;
-            datas->algo.mapX += datas->algo.stepX;
+            datas->algo.side = datas->algo.raydirx < 0 ? 0 : 1;
+            datas->algo.sidedistx += datas->algo.deltadistx;
+            datas->algo.mapx += datas->algo.stepx;
         }
         else
         {
-            datas->algo.side = datas->algo.rayDirY < 0 ? 2 : 3;
-            datas->algo.sideDistY += datas->algo.deltaDistY;
-            datas->algo.mapY += datas->algo.stepY;
+            datas->algo.side = datas->algo.raydiry < 0 ? 2 : 3;
+            datas->algo.sidedisty += datas->algo.deltadisty;
+            datas->algo.mapy += datas->algo.stepy;
         }
-        if (datas->game.map[datas->algo.mapX][datas->algo.mapY] == 1)
+        if (datas->game.map[datas->algo.mapx][datas->algo.mapy] == 1)
             datas->algo.hit = 1;
     }
 }
@@ -99,21 +99,21 @@ void    check_hit(t_struct *datas)
 void    init_calcul_for_draw_wall(t_struct *datas, int w, int h)
 {
         (void)w;
-        datas->algo.perpWallDist = datas->algo.side == 0 || datas->algo.side == 1 ?
-        (datas->algo.mapX - datas->algo.posX + (1 - datas->algo.stepX) / 2)
-         / datas->algo.rayDirX : (datas->algo.mapY - datas->algo.posY + 
-         (1 - datas->algo.stepY) / 2) / datas->algo.rayDirY;
-         datas->algo.lineHeight = (int)(h / datas->algo.perpWallDist);
-         datas->algo.drawStart = -datas->algo.lineHeight / 2 + h / 2;
-         if (datas->algo.drawStart < 0)
-            datas->algo.drawStart = 0;
-        datas->algo.drawEnd = datas->algo.lineHeight / 2 + h / 2;
-        if (datas->algo.drawEnd >= h)
-            datas->algo.drawEnd = h - 1;
-        datas->algo.wallX = datas->algo.side == 0 || datas->algo.side == 1 ?
-        datas->algo.posY + datas->algo.perpWallDist * datas->algo.rayDirY : 
-        datas->algo.posX + datas->algo.perpWallDist * datas->algo.rayDirX;
-        datas->algo.wallX -= floor((datas->algo.wallX));
+        datas->algo.perpwalldist = datas->algo.side == 0 || datas->algo.side == 1 ?
+        (datas->algo.mapx - datas->algo.posx + (1 - datas->algo.stepx) / 2)
+         / datas->algo.raydirx : (datas->algo.mapy - datas->algo.posy + 
+         (1 - datas->algo.stepy) / 2) / datas->algo.raydiry;
+         datas->algo.lineheight = (int)(h / datas->algo.perpwalldist);
+         datas->algo.drawstart = -datas->algo.lineheight / 2 + h / 2;
+         if (datas->algo.drawstart < 0)
+            datas->algo.drawstart = 0;
+        datas->algo.drawend = datas->algo.lineheight / 2 + h / 2;
+        if (datas->algo.drawend >= h)
+            datas->algo.drawend = h - 1;
+        datas->algo.wallx = datas->algo.side == 0 || datas->algo.side == 1 ?
+        datas->algo.posy + datas->algo.perpwalldist * datas->algo.raydiry : 
+        datas->algo.posx + datas->algo.perpwalldist * datas->algo.raydirx;
+        datas->algo.wallx -= floor((datas->algo.wallx));
 }
 
 int    ft_raycasting(t_struct *datas)
@@ -135,7 +135,7 @@ int    ft_raycasting(t_struct *datas)
         check_hit(datas);
         init_calcul_for_draw_wall(datas, w, h);
         draw(datas);
-        datas->algo.zbuff[datas->algo.x] = datas->algo.perpWallDist;
+        datas->algo.zbuff[datas->algo.x] = datas->algo.perpwalldist;
     }
     if (datas->game.num_sprit > 0)
         if ((handle_sprit(datas)) == -1)

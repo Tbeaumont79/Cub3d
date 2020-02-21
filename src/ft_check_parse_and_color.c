@@ -1,5 +1,11 @@
 #include "../headers/cub3d.h"
 
+int exite(int key, void *datas)
+{
+	exit(1);
+	return (0);
+}
+
 int check_all(t_struct *datas)
 {
     if (datas->game.num_spawn == 0)

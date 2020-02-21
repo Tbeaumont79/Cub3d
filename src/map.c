@@ -1,9 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 16:37:22 by thbeaumo          #+#    #+#             */
+/*   Updated: 2020/02/21 16:37:23 by thbeaumo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 #include "../Libft/libft.h"
-
-// faire le check de la map faire en sorte que tout soit good avant de l'ajouter dans la structure !
-// gerer le cas ou il y a pas de spawn et bien gerer que la map soit fermer !!
-// la map peu ne pas avoir de sprit
 
 int     ft_is_dir(char c)
 {
@@ -59,8 +67,8 @@ int    map_into_struct(t_struct *datas, char *s)
                     return (ft_error("map is not close ! \n"));
                 if (ft_is_dir(*s))
                 {
-                    datas->algo.posX = i + 0.5;
-                    datas->algo.posY = j + 0.5;
+                    datas->algo.posx = i + 0.5;
+                    datas->algo.posy = j + 0.5;
                     datas->game.spaw_dir = *s;
                     *s = '0';
                     datas->game.num_spawn += 1;

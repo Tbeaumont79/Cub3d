@@ -1,82 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_datas.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/21 16:29:59 by thbeaumo          #+#    #+#             */
+/*   Updated: 2020/02/21 16:30:32 by thbeaumo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/cub3d.h"
 #include "../Libft/libft.h"
 
-void      skip_char(char **s, int c)
+void	skip_char(char **s, int c)
 {
-    while (**s == c)
-        (*s)++;
+	while (**s == c)
+		(*s)++;
 }
 
-unsigned long ft_dec_to_hexa(int r, int g, int b)
+int		ft_fill_s(t_struct *datas, char *str)
 {
-    return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+	if (*str == '1')
+	{
+		if (datas->game.m_parsed < 5)
+			return (ft_error("map not at the end of file !"));
+		datas->algo.tmp = gnl_strjoin(datas->algo.s, str);
+		free(datas->algo.s);
+		datas->algo.s = datas->algo.tmp;
+		datas->algo.tmp2 = gnl_strjoin(datas->algo.s, "\n");
+		free(datas->algo.s);
+		datas->algo.s = datas->algo.tmp2;
+		datas->game.m_line++;
+	}
+	return (0);
 }
 
-int            ft_get_color(t_struct *datas, char *s)
+int		add_sprit_path(t_struct *datas, char *s)
 {
-    int r;
-    int g;
-    int b;
-
-    r = 0;
-    g = 0;  
-    b = 0;
-    skip_char(&s, ' ');
-    if (*s == 'F')
-    {
-        s++;
-        r = ft_atoi((const char **)&s);
-        skip_char(&s, ',');
-        g = ft_atoi((const char **)&s);
-        skip_char(&s, ',');
-        b = ft_atoi((const char **)&s);
-        datas->game.flor_color = ft_dec_to_hexa(r, g, b);
-        datas->game.m_parsed++;
-    }
-    else if (*s == 'C')
-    {
-        s++;
-        r = ft_atoi((const char **)&s);
-        skip_char(&s, ',');
-        g = ft_atoi((const char **)&s);
-        skip_char(&s, ',');
-        b = ft_atoi((const char **)&s);
-        datas->game.rof_color = ft_dec_to_hexa(r, g, b);
-        datas->game.m_parsed++;
-    }
-    return (0);
+	skip_char(&s, ' ');
+	if (*s == 'X')
+	{
+		s++;
+		skip_char(&s, ' ');
+		datas->game.sprit_tex2 = ft_strdup(s);
+		datas->game.m_parsed++;
+	}
+	if (*s == 'S' && *(s + 1) != 'O')
+	{
+		s++;
+		skip_char(&s, ' ');
+		datas->game.sprit_tex = ft_strdup(s);
+		datas->game.m_parsed++;
+	}
+	return (0);
 }
 
-int            add_sprit_path(t_struct *datas, char *s)
+int		add_reso(t_struct *datas, char *s)
 {
-    skip_char(&s, ' ');
-    if (*s == 'X')
-    {
-        s++;
-        skip_char(&s, ' ');
-        datas->game.sprit_tex2 = ft_strdup(s);
-        datas->game.m_parsed++;
-
-    }
-    if (*s == 'S' && *(s + 1) != 'O')
-    {
-        s++;
-        skip_char(&s, ' ');
-        datas->game.sprit_tex = ft_strdup(s); // <---- NEED TO FREE !!!!!
-        datas->game.m_parsed++;
-    }
-    return (0);
-}
-
-int             add_reso(t_struct *datas, char *s)
-{
-    skip_char(&s, ' ');
-    if (*s == 'R')
-    {
-        s++;
-        datas->game.w_w = ft_atoi((const char **)&s);
-        datas->game.w_h = ft_atoi((const char **)&s);
-        datas->game.m_parsed++;
-    }
-    return (0);
+	skip_char(&s, ' ');
+	if (*s == 'R')
+	{
+		s++;
+		datas->game.w_w = ft_atoi((const char **)&s);
+		datas->game.w_h = ft_atoi((const char **)&s);
+		datas->game.m_parsed++;
+	}
+	return (0);
 }
