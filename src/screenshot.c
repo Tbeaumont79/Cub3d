@@ -2,66 +2,78 @@
 #include "../headers/cub3d.h"
 #include "../Libft/libft.h"
 
-void int_char(unsigned char *headerbmp, unsigned int val)
-{
-    unsigned int *ptr;
 
-    ptr = (unsigned int *)headerbmp;
-    *ptr = val;
+void w_h_i(int fd, int val)
+{
+    char ptr;
+
+    ptr = val & 0xff;
+    write(fd, &ptr, 1);
+    ptr = (val >> 8) & 0xff;
+    write(fd, &ptr, 1);
 }
 
-int write_header(t_struct *datas, int fd, int fsize)
+void w_i(int fd, int val)
 {
-    int tmp;
-    int i;
-    unsigned char headerbmp[54];
-
-    ft_bzero(headerbmp, 54);
-    headerbmp[0] = (unsigned char)'B';
-    headerbmp[1] = (unsigned char)'M';
-    int_char(headerbmp + 2, fsize);
-    headerbmp[10] = (unsigned char)54;
-    headerbmp[14] = (unsigned char)40;
-    tmp = datas->game.w_w;
-    int_char(headerbmp + 18, tmp);
-    tmp = -datas->game.w_h;
-    int_char(headerbmp + 22, tmp);
-    headerbmp[26] = (unsigned char)1;
-    headerbmp[28] = (unsigned char)24;
-    write(fd, headerbmp, 54);
-    return (1);
+    w_h_i(fd, val);
+    w_h_i(fd, val >> 16);
 }
 
-int     get_color_bmp(t_struct *datas, int i, int j)
+void w_c(int fd, int color)
 {
-    int c_to_rgb;
-    int color;
+    char ptr;
 
-    color = datas->img.datas[datas->game.w_w * j + i];
-    c_to_rgb =
-    (color & 0xFF) | (color & 0x00FF) | (color & 0x0000FF);
-    return (c_to_rgb);
+    w_h_i(fd, color);
+    ptr = color >> 16 & 0xff;
+    write(fd, &ptr, 1);
 }
 
-int write_data(int file, t_struct *datas, unsigned int gap)
+void w_end(int fd, int val)
 {
-    static unsigned char zero[3] = {0, 0, 0};
+    while (val--)
+        write(fd, "\0", 1);
+}
+
+int write_bmp(t_struct *datas, int fd, int lsize)
+{
+    write(fd, "BM", 2);
+    w_i(fd, 54 + lsize * datas->game.w_h);
+    w_i(fd, 0);
+    w_i(fd, 54);
+    w_i(fd, 40);
+    w_i(fd, datas->game.w_w);
+    w_i(fd, datas->game.w_h);
+    w_i(fd, 1);
+    w_i(fd, 24);
+    w_i(fd, 0);
+    w_i(fd, 0);
+    w_i(fd, 6400);
+    w_i(fd, 6400);
+    w_i(fd, 0);
+    w_i(fd, 0);
+    return (0);
+}
+
+int write_data(int file, t_struct *datas)
+{
     int i;
     int j;
-    int color;
+    unsigned int color;
+    int r;
 
-    i = -1;
-    while (++i < datas->game.w_h)
+    r = datas->game.w_w * 3 % 4;
+    i = datas->game.w_h - 1;
+    while (i >= 0)
     {
         j = -1;
         while (++j < datas->game.w_w)
         {
-            color = get_color_bmp(datas, i, j);
-            if (write(file, &color,3) == -1)
-                return (-1);
+            color = datas->img.datas[(datas->game.w_w * i) + j];
+            w_c(file, color);
+            if (r)
+                w_end(file, 4 - r);
         }
-        if (gap > 0 && write(file, &zero, gap) == -1)
-            return (-1);
+        i--;
     }
     return (0);
 }
@@ -69,23 +81,16 @@ int write_data(int file, t_struct *datas, unsigned int gap)
 int     ft_screenshot(t_struct *datas)
 {
     int fd;
-    unsigned int pibpr;
-    unsigned int pabpr;
-    unsigned int fsize;
+    int lsize;
 
-    ft_raycasting(datas);
-    pibpr = datas->game.w_w * 3;
-    pabpr = (4 - (pibpr % 4)) % 4;
-    fsize = 54
-        + (pibpr + pabpr) * datas->game.w_h;
-    if ((fd = open("screen.bmp", O_WRONLY
-    | O_CREAT | O_TRUNC | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)) == -1)
-        return (-1);
-    if ((write_header(datas, fd, fsize)) == -1)
-        return (-1);
-    if ((write_data(fd, datas, pabpr)))
+    lsize = datas->game.w_w * 3;
+    lsize += lsize % 4 ? 4 - lsize % 4 : lsize;
+    lsize += 4 - lsize % 4;
+    if (!(fd = open("screen.bmp", O_WRONLY
+    | O_CREAT, 0666)))
         return (0);
+    write_bmp(datas, fd, lsize);
+    write_data(fd, datas);
     close(fd);
-    free(datas);
     return (1);
 }
