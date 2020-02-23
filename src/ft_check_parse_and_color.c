@@ -23,5 +23,10 @@ int check_all(t_struct *datas)
         return (ft_error("the windows width is not set ! \n"));
     if (datas->game.w_h == 0)
         return (ft_error("the windows heigth is not set ! \n"));
+	if (datas->game.w_w > 2560 && datas->game.w_h > 1440)
+	{
+		datas->game.w_w = 2560;
+		datas->game.w_h = 1440;
+	}
     return (0);
 }

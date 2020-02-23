@@ -66,5 +66,6 @@ int		ft_read_file(char *filename, t_struct *datas)
 	if ((map_into_struct(datas, datas->algo.s)) == -1)
 		return (-1);
 	free(datas->algo.s);
+	close(fd);
 	return (0);
 }

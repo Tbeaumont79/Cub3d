@@ -6,7 +6,7 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 18:13:36 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/21 18:17:47 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 15:59:20 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int		get_sprite(t_struct *datas)
 			 * (datas->algo.posy - datas->sprit[j].posy));
 		j++;
 	}
+	
 	return (datas->game.sprit_light > 0 ? datas->game.sprit_light : 0);
 }
 
