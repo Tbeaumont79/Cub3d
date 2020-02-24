@@ -6,11 +6,11 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:04:06 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 12:06:18 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 14:17:00 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "../headers/mlx.h"
 #include "../headers/cub3d.h"
 #include "../Libft/libft.h"
 

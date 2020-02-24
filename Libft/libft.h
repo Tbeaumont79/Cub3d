@@ -6,7 +6,7 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 16:21:45 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/09 16:27:13 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:10:26 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ void	ft_putchar(char c);
 void	ft_putstr(char *s);
 int		ft_maj_alpha(int c);
 int		ft_atoi(const char **s1);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

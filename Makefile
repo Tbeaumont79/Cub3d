@@ -17,6 +17,9 @@ SOURCES = main.c \
 		  get_next_line_utils.c \
 		  keyparsing.c \
 		  map.c \
+		  rotate.c \
+		  init_sprit_var.c \
+		  raycasting_var.c \
 		  raycasting.c \
 		  screenshot.c \
 		  sprit_pos_and_sorted.c \
@@ -63,7 +66,7 @@ clean:
 	rm -f $(OBJS)
 	rm -rf $(DIR_O)
 	make clean -C $(LIBFT_DIR)
-	make clean -c $(MLX_DIR)
+	make clean -C $(MLX_DIR)
 
 fclean: clean
 	rm -rf $(NAME)

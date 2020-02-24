@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 18:13:36 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 15:59:20 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:26:00 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 
 void	init_sprit(t_struct *datas, int i)
 {
@@ -23,8 +23,7 @@ void	init_sprit(t_struct *datas, int i)
 			datas->algo.s_x
 			- datas->algo.dirx * datas->algo.s_y);
 	datas->algo.trans_y = datas->algo.invet * (-datas->algo.planey *
-			datas->algo.s_x
-			+ datas->algo.planex * datas->algo.s_y);
+			datas->algo.s_x + datas->algo.planex * datas->algo.s_y);
 	datas->algo.screenx = (int)((datas->game.w_w / 2) * (1 + datas->algo.trans_x
 				/ datas->algo.trans_y));
 	datas->algo.s_h = abs((int)(datas->game.w_h / (datas->algo.trans_y)));
@@ -47,27 +46,25 @@ void	display_sprit(t_struct *datas, int i)
 	int val;
 	int color;
 
-	datas->algo.sprit_tex_x = (int)(256 * (datas->algo.strip - 
+	datas->algo.sprit_tex_x = (int)(256 * (datas->algo.strip -
 				(-datas->algo.s_w / 2 + datas->algo.screenx))
 			* datas->sprit[i].w / datas->algo.s_w) / 256;
 	if (datas->algo.trans_y > 0 && datas->algo.strip > 0 &&
 			datas->algo.strip < datas->game.w_w &&
 			datas->algo.trans_y < datas->algo.zbuff[datas->algo.strip])
 	{
-		y = datas->algo.dstart_y;
-		while (y < datas->algo.dend_y)
+		y = datas->algo.dstart_y - 1;
+		while (++y < datas->algo.dend_y)
 		{
 			val = ((y * 256) - (datas->game.w_h * 128) +
 					(datas->algo.s_h * 128));
 			datas->algo.sprit_tex_y =
 				((val * datas->sprit[i].h) / datas->algo.s_h) / 256;
 			color = datas->sprit[i].datas[(datas->sprit[i].w *
-					datas->algo.sprit_tex_y
-					) + datas->algo.sprit_tex_x];
+					datas->algo.sprit_tex_y) + datas->algo.sprit_tex_x];
 			if ((color & 0x00FFFFFF) != 0)
 				datas->img.datas[(datas->game.w_w * y) + datas->algo.strip] =
 					color;
-			y++;
 		}
 	}
 }
@@ -77,40 +74,27 @@ int		get_sprite(t_struct *datas)
 	int j;
 	int size;
 
-	size = datas->game.num_sprit == 0 && datas->game.sprit_light > 0 ?
-		datas->game.sprit_light : 0;
-	size = datas->game.num_sprit > 0 && datas->game.sprit_light == 0 ?
-		datas->game.num_sprit : size;
-	size = datas->game.num_sprit >= 0 && datas->game.sprit_light >= 0 ?
-		datas->game.num_sprit + datas->game.sprit_light : size;
-	if (!(datas->sprit = (t_sprit *)malloc(sizeof(t_sprit)
-					* size)))
+	size = define_size(datas);
+	j = -1;
+	if (!(datas->sprit = (t_sprit *)malloc(sizeof(t_sprit) * size)))
 		return (ft_error("malloc !\n"));
 	get_sprit_pos(datas);
-	j = 0;
-	while (j < size)
+	while (++j < size)
 	{
-		if (datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] == 2
-				&& datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] != 3)
-			datas->algo.s_name = datas->game.sprit_tex;
-		if (datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] == 3
-				&&
-				datas->game.map[datas->sprit[j].posx][datas->sprit[j].posy] != 2)
-			datas->algo.s_name = datas->game.sprit_tex2;
+		define_sprit_texture(datas, j);
 		if (!(datas->sprit[j].img =
 					mlx_xpm_file_to_image(datas->img.ptr, datas->algo.s_name,
 						&datas->sprit[j].w, &datas->sprit[j].h)))
 			return (ft_error("int path or bad sprit !\n"));
 		datas->sprit[j].datas = (int *)mlx_get_data_addr(datas->sprit[j].img,
-				&datas->sprit[j].bpp, &datas->sprit[j].size_line,&datas->sprit[j].endian);
+				&datas->sprit[j].bpp, &datas->sprit[j].size_line,
+				&datas->sprit[j].endian);
 		datas->sprit[j].sprite_distance =
 			((datas->algo.posx - datas->sprit[j].posx)
-			 * (datas->algo.posx - datas->sprit[j].posx)
-			 + (datas->algo.posy - datas->sprit[j].posy) 
-			 * (datas->algo.posy - datas->sprit[j].posy));
-		j++;
+			* (datas->algo.posx - datas->sprit[j].posx)
+			* (datas->algo.posy - datas->sprit[j].posy)
+			* (datas->algo.posy - datas->sprit[j].posy));
 	}
-	
 	return (datas->game.sprit_light > 0 ? datas->game.sprit_light : 0);
 }
 

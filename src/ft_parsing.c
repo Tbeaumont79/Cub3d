@@ -6,7 +6,7 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:37:37 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/21 16:58:07 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/24 17:58:34 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 
 int		ft_check_file_name(char *str)
 {
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '.')
+		{
+			if (ft_strcmp(&str[i], ".cub") != 0)
+				return (ft_error("not a good map name \n"));
+		}
+		i++;
+	}
 	return (!ft_strstr(str, ".cub") ? ft_error("not a good map name") : 1);
 }
 
 int		ft_parse_text(char *s, t_struct *datas)
 {
 	static char tex[5][3] = {{"NO"}, {"SO"}, {"WE"}, {"EA"}, {"FO"}};
-	int         i;
+	int			i;
 
 	i = -1;
 	while (++i < 5)
@@ -37,32 +49,34 @@ int		ft_parse(char *str, t_struct *datas)
 	add_reso(datas, str);
 	ft_parse_text(str, datas);
 	add_sprit_path(datas, str);
-	ft_get_color(datas , str);
-	ft_fill_s(datas, str);
-	return (0); 
+	ft_get_color(datas, str);
+	if (ft_fill_s(datas, str) == -1)
+		return (-1);
+	return (0);
 }
 
 int		ft_read_file(char *filename, t_struct *datas)
 {
-	int    fd;
-	char   *line;
-	char   *tmp;
-	char   *tmp2;
+	int		fd;
+	char	*line;
 
 	datas->algo.s = NULL;
-	if (!ft_check_file_name(filename))
-		return (-1);
 	if ((fd = open(filename, O_RDONLY)) == -1)
-		ft_error("not a valid file");
+		return (ft_error("invalid file \n"));
+	if ((ft_check_file_name(filename)) == -1)
+		return (-1);
 	while ((datas->algo.ret = get_next_line(fd, &line)) >= 0)
 	{
 		if (datas->game.m_line)
 			datas->game.m_space++;
-		ft_parse(line, datas);
+		if (ft_parse(line, datas) == -1)
+			return (-1);
 		free(line);
 		if (datas->algo.ret == 0)
 			break ;
 	}
+	if (datas->game.m_space == 0)
+		return (ft_error("parsing datas not found \n"));
 	if ((map_into_struct(datas, datas->algo.s)) == -1)
 		return (-1);
 	free(datas->algo.s);

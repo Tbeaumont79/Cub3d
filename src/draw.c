@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:58 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/21 16:21:36 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 14:14:25 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 
 void	draw_sky(t_struct *datas)
 {

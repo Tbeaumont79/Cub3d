@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:23:04 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 12:09:08 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 14:16:26 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 #include "../Libft/libft.h"
 
 void	init_structure(t_struct *datas)

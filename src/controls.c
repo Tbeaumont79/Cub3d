@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:51:28 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/21 16:57:15 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:54:05 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 
 void	quit(t_struct *datas)
 {
@@ -49,42 +49,6 @@ void	move_down(t_struct *datas)
 			[(int)(datas->algo.posy - datas->algo.diry * datas->algo.movespeed)]
 			!= 2)
 		datas->algo.posy -= datas->algo.diry * datas->algo.movespeed;
-}
-
-void	rotate_right(t_struct *datas)
-{
-	datas->algo.oldirx = datas->algo.dirx;
-	datas->algo.dirx =
-		datas->algo.dirx * cos(-datas->algo.rotspeed) - datas->algo.diry *
-		sin(-datas->algo.rotspeed);
-	datas->algo.diry =
-		datas->algo.oldirx * sin(-datas->algo.rotspeed) + datas->algo.diry *
-		cos(-datas->algo.rotspeed);
-	datas->algo.oldplanex = datas->algo.planex;
-	datas->algo.planex =
-		datas->algo.planex * cos(-datas->algo.rotspeed) - datas->algo.planey *
-		sin(-datas->algo.rotspeed);
-	datas->algo.planey =
-		datas->algo.oldplanex * sin(-datas->algo.rotspeed) + datas->algo.planey
-		* cos(-datas->algo.rotspeed);
-}
-
-void	rotate_left(t_struct *datas)
-{
-	datas->algo.oldirx = datas->algo.dirx;
-	datas->algo.dirx =
-		datas->algo.dirx * cos(datas->algo.rotspeed) - datas->algo.diry *
-		sin(datas->algo.rotspeed);
-	datas->algo.diry =
-		datas->algo.oldirx * sin(datas->algo.rotspeed) + datas->algo.diry *
-		cos(datas->algo.rotspeed);
-	datas->algo.oldplanex = datas->algo.planex;
-	datas->algo.planex =
-		datas->algo.planex * cos(datas->algo.rotspeed) - datas->algo.planey *
-		sin(datas->algo.rotspeed);
-	datas->algo.planey =
-		datas->algo.oldplanex * sin(datas->algo.rotspeed) + datas->algo.planey *
-		cos(datas->algo.rotspeed);
 }
 
 void	move_right(t_struct *datas)

@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:30:48 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 12:10:28 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 14:14:39 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 
 void	define_florwallxandy(t_struct *datas)
 {

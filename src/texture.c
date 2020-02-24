@@ -6,12 +6,12 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:27:04 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/21 16:28:55 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/02/23 15:01:16 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "mlx.h"
+#include "../headers/mlx.h"
 #include "../Libft/libft.h"
 
 int		add_tex_path(t_struct *datas, char *s, int i)
@@ -62,7 +62,6 @@ void	init_algo_tex(t_struct *datas)
 int		ft_get_texture(t_struct *datas)
 {
 	int i;
-	int size;
 
 	i = -1;
 	while (++i < datas->game.num_tex)
