@@ -6,7 +6,7 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:27:04 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 15:01:16 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/03/12 21:49:06 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	choose_tex(t_struct *datas, int *color, int val)
 	{
 		datas->algo.texy[i] =
 			((val * datas->tex[i].t_h) / datas->algo.lineheight) / 256;
-		*color = datas->tex[i].datas[(datas->tex[i].t_h * datas->algo.texy[i])
+		*color = datas->tex[i].datas[(datas->tex[i].t_w * datas->algo.texy[i])
 		+ datas->algo.texx[i]];
 	}
 }

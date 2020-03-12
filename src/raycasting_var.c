@@ -6,7 +6,7 @@
 /*   By: thbeaumo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 16:13:19 by thbeaumo          #+#    #+#             */
-/*   Updated: 2020/02/23 16:15:43 by thbeaumo         ###   ########.fr       */
+/*   Updated: 2020/03/12 21:51:08 by thbeaumo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ double		define_spawn_deg(t_struct *datas)
 {
 	double deg;
 
-	deg = datas->game.spaw_dir == 'O' ? M_PI_2 : 0;
+	deg = datas->game.spaw_dir == 'W' ? M_PI_2 : 0;
 	deg = datas->game.spaw_dir == 'E' ? -(M_PI_2) : deg;
 	deg = datas->game.spaw_dir == 'N' ? 0 : deg;
 	deg = datas->game.spaw_dir == 'S' ? -(M_PI) : deg;
