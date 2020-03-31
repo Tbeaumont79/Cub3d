@@ -13,6 +13,19 @@
 #include "../headers/cub3d.h"
 #include "../headers/mlx.h"
 
+void	draw_hud(t_struct *datas)
+{
+	int y;
+
+	y = -1;
+	while (++y < datas->game.w_h)
+		;
+	while (--y > datas->game.w_h - 300)
+		datas->img.datas[(y * datas->game.w_w) + datas->algo.x] =
+		datas->game.rof_color;
+
+}
+
 void	draw_sky(t_struct *datas)
 {
 	int y;

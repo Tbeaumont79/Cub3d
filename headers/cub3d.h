@@ -33,6 +33,16 @@ typedef enum		e_value
 	key_escape,
 }					t_value;
 
+typedef enum		e_item
+{
+	item_1,
+	item_2,
+	item_3,
+	item_4,
+	item_5,
+	item_6
+}					t_item;
+
 typedef struct		s_algo
 {
 	double	floorxwall;
@@ -140,6 +150,27 @@ typedef struct		s_tex
 	int		t_w;
 }					t_tex;
 
+typedef struct		s_hud
+{
+	int		*datas;
+	void	*img;
+	int		size_line;
+	int		bpp;
+	int		endian;
+	int		item[6];
+}					t_hud;
+
+typedef struct		s_player
+{
+	int		*data;
+	void	*img;
+	int 	bpp;
+	int		endian;
+	int		size_line;
+	int		tex_h;
+	int		tex_w;
+}					t_player;
+
 typedef struct		s_sprit
 {
 	int		sprite_order;
@@ -175,6 +206,8 @@ typedef struct		s_struct
 	t_game	game;
 	t_sprit	*sprit;
 	t_tex	tex[5];
+	t_hud	hud;
+	t_player player;
 }					t_struct;
 
 void				draw_sky(t_struct *datas);
@@ -187,6 +220,7 @@ int					map_into_struct(t_struct *datas, char *s);
 void				move_up(t_struct *datas);
 void				move_down(t_struct *datas);
 void				move_right(t_struct *datas);
+void				display_whereiam(t_struct *datas);
 void				move_left(t_struct *datas);
 void				quit(t_struct *datas);
 void				init_raycasting_var(t_struct *datas);
@@ -228,5 +262,8 @@ void				init_raycasting_var(t_struct *datas);
 void				init_raycasting_var_in_loop(t_struct *datas, int w, int h);
 void				define_sprit_texture(t_struct *datas, int j);
 int					define_size(t_struct *datas);
+void     			init_player(t_struct *datas);
+void    			draw_player(t_struct *datas, int x, int y);
+void				draw_hud(t_struct *datas);
 
 #endif

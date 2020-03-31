@@ -32,6 +32,7 @@ void	init_img(t_struct *datas)
 void	render(t_struct *datas)
 {
 	free(datas->algo.zbuff);
+	//init_player(datas);
 	mlx_put_image_to_window(datas->img.ptr, datas->img.win,
 	datas->img.img, 0, 0);
 	mlx_destroy_image(datas->img.ptr, datas->img.img);

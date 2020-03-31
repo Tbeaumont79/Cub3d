@@ -58,7 +58,7 @@ int		sorted_sprite(t_struct *datas)
 	int n_s;
 	int swap;
 
-	swap = 0;
+	swap = 1;
 	n_s = datas->game.num_sprit;
 	while (swap || n_s > 1)
 	{

@@ -24,6 +24,7 @@ SOURCES = main.c \
 		  screenshot.c \
 		  sprit_pos_and_sorted.c \
 		  texture.c \
+		  player.c
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 
@@ -41,7 +42,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-LIBS = -lmlx -framework OpenGL -framework Appkit
+LIBS = -framework OpenGL -framework Appkit
 
 MLX = $(addprefix $(MLX_DIR)/,libmlx.a)
 

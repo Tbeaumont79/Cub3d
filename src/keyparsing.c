@@ -69,6 +69,7 @@ int		keyparsing(void *param)
 		fct[5](datas);
 	if (datas->game.key[rot_right])
 		fct[6](datas);
+	//display_whereiam(datas);
 	ft_raycasting(datas);
 	return (0);
 }

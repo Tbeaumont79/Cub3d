@@ -27,13 +27,13 @@ void	init_sprit(t_struct *datas, int i)
 	datas->algo.screenx = (int)((datas->game.w_w / 2) * (1 + datas->algo.trans_x
 				/ datas->algo.trans_y));
 	datas->algo.s_h = abs((int)(datas->game.w_h / (datas->algo.trans_y)));
-	datas->algo.dstart_y = -datas->algo.s_h / 2 + datas->game.w_h / 2;
+	datas->algo.dstart_y = -(datas->algo.s_h / 2) + datas->game.w_h / 2;
 	datas->algo.dstart_y = datas->algo.dstart_y > 0 ? datas->algo.dstart_y : 0;
 	datas->algo.dend_y = datas->algo.s_h / 2 + datas->game.w_h / 2;
 	if (datas->algo.dend_y >= datas->game.w_h)
 		datas->algo.dend_y = datas->game.w_h - 1;
 	datas->algo.s_w = abs((int)(datas->game.w_h / (datas->algo.trans_y)));
-	datas->algo.dstart_x = -datas->algo.s_w / 2 + datas->algo.screenx;
+	datas->algo.dstart_x = -(datas->algo.s_w / 2) + datas->algo.screenx;
 	datas->algo.dstart_x = datas->algo.dstart_x > 0 ? datas->algo.dstart_x : 0;
 	datas->algo.dend_x = datas->algo.s_w / 2 + datas->algo.screenx;
 	if (datas->algo.dend_x >= datas->game.w_w)
@@ -56,8 +56,8 @@ void	display_sprit(t_struct *datas, int i)
 		y = datas->algo.dstart_y - 1;
 		while (++y < datas->algo.dend_y)
 		{
-			val = ((y * 256) - (datas->game.w_h * 128) +
-					(datas->algo.s_h * 128));
+			val = (y) * 256 - datas->game.w_h * 128 +
+					datas->algo.s_h * 128;
 			datas->algo.sprit_tex_y =
 				((val * datas->sprit[i].h) / datas->algo.s_h) / 256;
 			color = datas->sprit[i].datas[(datas->sprit[i].w *
@@ -68,7 +68,28 @@ void	display_sprit(t_struct *datas, int i)
 		}
 	}
 }
+void display_whereiam(t_struct *datas)
+{
+	int i;
+	int j;
 
+	i = 0;
+	if (datas->game.map[(int)datas->algo.posx][(int)datas->algo.posy] == 0)
+		datas->game.map[(int)datas->algo.posx][(int)datas->algo.posy] = 5;
+	while (i < datas->game.m_h)
+	{
+		j = 0;
+		while (j < datas->game.m_w)
+		{
+			printf("%d ", datas->game.map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+		printf("\n");
+
+}
 int		get_sprite(t_struct *datas)
 {
 	int j;
@@ -92,7 +113,7 @@ int		get_sprite(t_struct *datas)
 		datas->sprit[j].sprite_distance =
 			((datas->algo.posx - datas->sprit[j].posx)
 			* (datas->algo.posx - datas->sprit[j].posx)
-			* (datas->algo.posy - datas->sprit[j].posy)
+			+ (datas->algo.posy - datas->sprit[j].posy)
 			* (datas->algo.posy - datas->sprit[j].posy));
 	}
 	return (datas->game.sprit_light > 0 ? datas->game.sprit_light : 0);
